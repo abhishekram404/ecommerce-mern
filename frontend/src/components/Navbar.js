@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "styles/Navbar.sass";
+import "styles/Navbar.scss";
 import cartIcon from "assets/cart-logo.svg";
 
 export default function Navbar() {

@@ -1,6 +1,6 @@
 import React from "react";
 import loginSvg from "assets/login-svg.svg";
-import "styles/Register.sass";
+import "styles/Register.scss";
 import { Link } from "react-router-dom";
 
 export default function Register() {
@@ -8,7 +8,9 @@ export default function Register() {
     <div className="login">
       <div className="login-form shadow">
         <div className="left">
-          <img src={loginSvg} alt="login-svg" />
+          <div className="img-cont">
+            <img src={loginSvg} alt="login-svg" />
+          </div>
         </div>
         <div className="right">
           <form>
