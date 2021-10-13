@@ -9,3 +9,9 @@ $textColorPlaceholder: #bebebe;
 $white: #ffffff;
 $whitish: #fdfdfd;
 $greyBorder: #d0d0d0;
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

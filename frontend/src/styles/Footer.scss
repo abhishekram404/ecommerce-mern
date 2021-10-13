@@ -1,0 +1,36 @@
+@import "globals.scss";
+.footer {
+  background-color: rgba($color: $primaryColor, $alpha: 1);
+  padding: 40px;
+  display: flex;
+  justify-content: space-around;
+  //   align-items: center;
+  section {
+    text-align: left;
+    h2 {
+      font-family: "Montserrat";
+      color: $white;
+      font-weight: 600;
+      font-size: 3rem;
+    }
+    h6 {
+      font-family: "Lato";
+      color: $whitish;
+    }
+    .title {
+      font-family: "Montserrat";
+      color: $white;
+      font-weight: 400;
+      font-size: 2rem;
+    }
+    ul {
+      list-style-type: none;
+      padding: 5px;
+      li {
+        color: $whitish;
+        font-family: "Lato";
+        margin: 5px 0;
+      }
+    }
+  }
+}

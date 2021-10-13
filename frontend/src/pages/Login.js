@@ -2,20 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FormTemplate from "../components/FormTemplate";
 import { Input } from "../components/FormTemplate";
-export default function Register() {
+export default function Login() {
   return (
     <FormTemplate>
       <form>
-        <h2 className="text-center">Register your account</h2>
+        <h2 className="text-center">Login</h2>
         <br />
-        <div className="mb-3">
-          <Input
-            htmlFor="name"
-            label="Name"
-            type="text"
-            placeholder="John Doe"
-          />
-        </div>
         <div className="mb-3">
           <Input
             htmlFor="email"
@@ -32,36 +24,25 @@ export default function Register() {
             placeholder="rhin0runsf@st"
           />
         </div>
-        <div className="mb-3">
-          <Input
-            htmlFor="confirm-password"
-            label="Confirm Password"
-            type="password"
-            placeholder="rhin0runsf@st"
-          />
-        </div>
+
         <div className="mb-3 form-check">
           <input
             type="checkbox"
-            name="tnc"
-            id="tnc"
+            name="remember-me"
+            id="remember-me"
             className="form-check-input"
           />
-          <label htmlFor="tnc" className="form-check-label">
-            I hereby agree to all <span>terms and conditions</span> of Shopify.
+          <label htmlFor="remember-me" className="form-check-label">
+            Remember me{" "}
           </label>
         </div>
         <div className="mb-3">
-          <input
-            type="submit"
-            className="btn submit-btn"
-            value="Register my account"
-          />
+          <input type="submit" className="btn submit-btn" value="Login" />
         </div>
       </form>
       <hr className="mx-auto" />
       <p className="text-center">
-        Already have an account ? <Link to="/login">Login</Link>
+        Don't have an account ? <Link to="/register">Register here </Link>
       </p>
     </FormTemplate>
   );

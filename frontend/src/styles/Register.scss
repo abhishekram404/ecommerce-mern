@@ -1,9 +1,9 @@
 @import "globals.scss";
-.login {
+.form-template {
   height: 90vh;
   display: grid;
   place-items: center;
-  .login-form {
+  .form-cont {
     max-width: 1000px;
     min-width: 60%;
     overflow: hidden;
