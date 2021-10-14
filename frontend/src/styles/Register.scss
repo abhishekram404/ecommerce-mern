@@ -55,6 +55,11 @@
               color: $textColorPlaceholder;
             }
           }
+          .error-message {
+            font-family: "Roboto";
+            font-size: 0.9rem;
+            margin: 5px 0;
+          }
           .submit-btn {
             background: $primaryColor;
             color: $white;
@@ -63,6 +68,9 @@
             font-family: "Montserrat", sans-serif;
             font-weight: 500;
             box-shadow: 1px 2px 10px rgba($primaryColor, 0.6);
+          }
+          .disabled {
+            background-color: $textColorGrey;
           }
         }
       }
