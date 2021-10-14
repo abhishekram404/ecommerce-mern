@@ -1,7 +1,8 @@
 .App {
   overflow-x: hidden;
+  position: relative;
   .body {
-    position: relative;
+    min-height: 100vh;
     .backdrop {
       height: 100%;
       width: 100%;
@@ -18,5 +19,8 @@
         opacity: 1;
       }
     }
+  }
+  .footer {
+    bottom: 0;
   }
 }
