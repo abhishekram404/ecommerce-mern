@@ -2,7 +2,7 @@ import React from "react";
 import "styles/Product.scss";
 import placeholderImage from "assets/phone.jfif";
 import ReactStars from "react-rating-stars-component";
-export default function Product() {
+export default function ProductCustomer() {
   return (
     <div className="product">
       <div className="row img-row">

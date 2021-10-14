@@ -6,9 +6,7 @@
     // justify-content: center;
     padding: 40px 160px;
     .page-title {
-      font-family: "Lato";
-      color: $textColorHeading;
-      margin: 0 0 20px 0;
+      @include page-title;
     }
 
     .show-more-btn {

@@ -15,3 +15,9 @@ $greyBorder: #d0d0d0;
   justify-content: center;
   align-items: center;
 }
+
+@mixin page-title {
+  font-family: "Lato";
+  color: $textColorHeading;
+  margin: 0 0 20px 0;
+}

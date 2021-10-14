@@ -1,4 +1,4 @@
-import Product from "components/Product";
+import ProductCustomer from "components/ProductCustomer";
 import React from "react";
 import "styles/Homepage.scss";
 import categoryImage1 from "assets/gummy-coffee 1.svg";
@@ -8,14 +8,15 @@ export default function Homepage() {
       <div className="page-1">
         <h2 className="page-title">Our featured products</h2>
         <div className="products-list">
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
         </div>
         <button className="btn mx-auto my-4 px-4 show-more-btn">
           Show more
@@ -25,13 +26,13 @@ export default function Homepage() {
       <div className="page-2">
         <h2 className="page-title">Exciting offers</h2>
         <div className="products-list">
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
+          <ProductCustomer />
         </div>
       </div>
 
