@@ -61,22 +61,26 @@
   }
 
   .buttons-row {
-    .btn {
-      padding: 8px 0;
-      border-radius: 10px;
-      font-family: "Lato";
-    }
-    .chat-btn,
-    .edit-btn {
-      background: $white;
-      color: $textColorGrey;
-      box-shadow: 1px 1px 5px $textColorGrey;
-    }
-    .add-to-cart-btn,
-    .view-insights-btn {
-      background-color: rgba($color: $primaryColor, $alpha: 0.7);
-      color: $white;
-      box-shadow: 1px 1px 5px $primaryColor;
+    > div {
+      .btn {
+        padding: 8px 10px;
+        border-radius: 10px;
+        font-family: "Lato";
+      }
+
+      .chat-btn,
+      .edit-btn {
+        background: $white;
+        color: $textColorGrey;
+        box-shadow: 1px 1px 5px $textColorGrey;
+      }
+
+      .add-to-cart-btn,
+      .view-insights-btn {
+        background-color: rgba($color: $primaryColor, $alpha: 0.7);
+        color: $white;
+        box-shadow: 1px 1px 5px $primaryColor;
+      }
     }
   }
 }
