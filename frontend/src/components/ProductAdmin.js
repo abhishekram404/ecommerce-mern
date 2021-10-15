@@ -1,7 +1,9 @@
 import React from "react";
 import "styles/Product.scss";
 import placeholderImage from "assets/phone.jfif";
+import { Link, useRouteMatch } from "react-router-dom";
 export default function ProductAdmin() {
+  const { url } = useRouteMatch();
   return (
     <div className="product">
       <div className="row img-row">
@@ -22,8 +24,16 @@ export default function ProductAdmin() {
         </div>
       </div>
       <div className="row buttons-row mt-2">
-        <div className="col edit-btn btn mx-2">Edit product</div>
-        <div className="col view-insights-btn btn mx-2">View insights</div>
+        <div className="col">
+          <Link to={`/admin/edit-product/2`} className="edit-btn btn w-100">
+            Edit product
+          </Link>
+        </div>
+        <div className="col">
+          <Link to="/view-insights" className="view-insights-btn btn w-100">
+            View insights
+          </Link>
+        </div>
       </div>
     </div>
   );

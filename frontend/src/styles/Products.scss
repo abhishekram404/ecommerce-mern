@@ -21,8 +21,8 @@
     place-items: center;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 20px;
-    height: 100vh;
-    overflow: scroll;
+    // height: 100vh;
+    // overflow: scroll;
   }
   ::-webkit-scrollbar {
     display: none;
