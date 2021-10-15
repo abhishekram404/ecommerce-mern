@@ -51,8 +51,10 @@
       font-size: 1rem;
     }
   }
-  .seller-row {
-    .seller-name {
+  .seller-row,
+  .rating-row {
+    .seller-name,
+    > div {
       font-family: "Lato";
       color: $textColorGrey;
     }
@@ -62,6 +64,7 @@
     .btn {
       padding: 8px 0;
       border-radius: 10px;
+      font-family: "Lato";
     }
     .chat-btn,
     .edit-btn {

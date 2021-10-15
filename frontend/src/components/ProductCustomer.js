@@ -14,10 +14,11 @@ export default function ProductCustomer() {
         <div className="product-name col-10">Red stationary vase</div>
         <div className="product-price col-2">$25</div>
       </div>
-      <div className="row">
+      <div className="row rating-row">
         <div className="ratings col">
           <ReactStars />
         </div>
+        <div className="col-4 text-end text-success">Available</div>
       </div>
       <div className="row seller-row">
         <div className="col seller-name">Seller :</div>

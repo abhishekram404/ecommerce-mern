@@ -1,8 +1,8 @@
-import Customers from "components/Customers";
-import Dashboard from "components/Dashboard";
-import Employees from "components/Employees";
-import Orders from "components/Orders";
-import Products from "components/Products";
+import Customers from "pages/Customers";
+import Dashboard from "pages/Dashboard";
+import Employees from "pages/Employees";
+import Orders from "pages/Orders";
+import Products from "pages/Products";
 import Sidebar from "components/Sidebar";
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router";

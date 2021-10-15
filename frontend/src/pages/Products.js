@@ -1,6 +1,6 @@
 import React from "react";
 import "styles/Products.scss";
-import ProductAdmin from "./ProductAdmin";
+import ProductAdmin from "components/ProductAdmin";
 export default function Products() {
   return (
     <div className="display products p-3">
@@ -17,8 +17,6 @@ export default function Products() {
         </form>
 
         <form className="col-4 category-filter d-flex align-items-center">
-          {/* <form className="row row-cols-auto align-items-center"> */}
-          {/* <div className="col d-flex"> */}
           <label htmlFor="category" className="form-label m-0">
             Category : &nbsp;
           </label>
@@ -32,8 +30,6 @@ export default function Products() {
             <option value="electronics">Electronics</option>
             <option value="beauty&cosmetics">Beauty & cosmetics</option>
           </select>
-          {/* </div> */}
-          {/* </form> */}
         </form>
       </div>
 

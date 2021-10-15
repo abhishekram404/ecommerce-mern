@@ -1,11 +1,12 @@
 @import "globals.scss";
 
 .navbar {
-  // position: sticky !important;
+  position: sticky !important;
   top: 0;
   background-color: $primaryColor;
   transition: 0.3s;
   overflow: hidden;
+  z-index: 100000000000000000;
   .navbar-brand {
     a {
       color: $whitish;
