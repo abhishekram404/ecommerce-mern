@@ -80,7 +80,7 @@ export default function Products() {
           </div>
         </div>
       </Route>
-      <Route path={`${url}/edit`} component={EditProduct} />
+      <Route path={`${url}/edit/:id`} component={EditProduct} />
     </Switch>
   );
 }

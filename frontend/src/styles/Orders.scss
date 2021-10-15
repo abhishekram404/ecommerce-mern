@@ -1,0 +1,32 @@
+@import "globals.scss";
+
+.orders-page {
+  .page-title-row {
+    font-family: "Lato";
+    div {
+      .page-title {
+        @include page-title;
+      }
+    }
+  }
+
+  article {
+    .table {
+      thead,
+      tbody {
+        tr {
+          th {
+            color: $primaryColor;
+          }
+          th,
+          td {
+            text-align: center;
+            font-family: "Lato";
+            text-overflow: clip;
+            max-width: 400px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -25,7 +25,7 @@ export default function ProductAdmin() {
       </div>
       <div className="row buttons-row mt-2">
         <div className="col">
-          <Link to={`/admin/edit-product/2`} className="edit-btn btn w-100">
+          <Link to={`${url}/edit/2`} className="edit-btn btn w-100">
             Edit product
           </Link>
         </div>
