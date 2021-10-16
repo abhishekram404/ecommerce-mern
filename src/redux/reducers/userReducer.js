@@ -8,13 +8,11 @@ const userReducer = (
     case REGISTER_SUCCESS:
       return {
         ...state,
-        isUserLoggedIn: true,
         details: action.payload,
       };
     case REGISTER_FAIL:
       return {
         ...state,
-        isUserLoggedIn: false,
         details: action.payload,
       };
     default:
