@@ -23,6 +23,20 @@
     gap: 20px;
     // height: 100vh;
     // overflow: scroll;
+    .add-new-product-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: "Lato";
+      color: $textColorHeading;
+      text-decoration: none;
+      > h6 {
+      }
+      > .add-icon {
+        transform: scale(2);
+      }
+    }
   }
   ::-webkit-scrollbar {
     display: none;

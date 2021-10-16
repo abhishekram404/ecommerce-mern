@@ -1,11 +1,12 @@
 import React from "react";
 import "styles/Products.scss";
 import ProductAdmin from "components/ProductAdmin";
-import { Route, Switch, useRouteMatch } from "react-router";
+import { Route, Switch, useRouteMatch, Link } from "react-router-dom";
 import EditProduct from "./EditProduct";
+import { IoMdAdd } from "react-icons/io";
+
 export default function Products() {
   const { url } = useRouteMatch();
-  console.log(url);
   return (
     <Switch>
       <Route path={`${url}/`} exact>
@@ -44,6 +45,10 @@ export default function Products() {
 
           <hr />
           <div className="products-list ">
+            <Link to={`${url}/add`} className="add-new-product-btn product">
+              <IoMdAdd className="add-icon mb-4" />
+              <h4>Add a new product</h4>
+            </Link>
             <ProductAdmin />
             <ProductAdmin />
             <ProductAdmin />
@@ -81,6 +86,7 @@ export default function Products() {
         </div>
       </Route>
       <Route path={`${url}/edit/:id`} component={EditProduct} />
+      <Route path={`${url}/add`} component={() => <EditProduct mode="add" />} />
     </Switch>
   );
 }

@@ -14,21 +14,5 @@
         color: $white;
       }
     }
-    .right-form {
-      .img-input {
-        position: relative;
-        border: 2px dashed $textColorGrey;
-        #productImage {
-          opacity: 0;
-          position: absolute;
-        }
-        > h5 {
-          pointer-events: none;
-          text-align: center;
-          font-family: "Lato";
-          color: $textColorHeading;
-        }
-      }
-    }
   }
 }

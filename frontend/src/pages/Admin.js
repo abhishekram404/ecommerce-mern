@@ -7,7 +7,6 @@ import Sidebar from "components/Sidebar";
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router";
 import "styles/Admin.scss";
-import EditProduct from "./EditProduct";
 export default function Admin() {
   const { url } = useRouteMatch();
   return (
@@ -20,7 +19,7 @@ export default function Admin() {
           <Route path={`${url}/orders`} component={Orders} />
           <Route path={`${url}/customers`} component={Customers} />
           <Route path={`${url}/employees`} component={Employees} />
-          <Route path={`${url}/edit-product/:id`} component={EditProduct} />
+
           <Route
             path={`${url}/*`}
             render={() => {
