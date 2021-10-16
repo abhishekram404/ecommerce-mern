@@ -4,15 +4,41 @@ const port = process.env.PORT || 3001;
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const router = require("./routes/routes");
+dotenv.config();
 
 app.use(cors());
-app.use(express.static(path.join(__dirname, "../build")));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(bodyParser.json());
 
-app.get("*", async (req, res) => {
-  res.sendFile("index.html");
-});
+mongoose.connect(
+  process.env.MONGO_URI,
+  (err) => {
+    if (err) {
+      console.log("❌ Error connecting to DB  ");
+    }
+    console.log("✅ Connected to DB  ");
+  },
+  {
+    useNewUrlParser: true,
+  }
+);
+// serve the build folder in  production environment
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../build")));
+  app.get("*", async (req, res) => {
+    res.sendFile("index.html");
+  });
+}
+
+app.use("/api", router);
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`🎧  Listening on port ${port}`);
 });

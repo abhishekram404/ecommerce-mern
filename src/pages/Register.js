@@ -10,6 +10,7 @@ export default function Register() {
     email: "",
     password: "",
     repassword: "",
+    employee: false,
     agreed: false,
   };
 
@@ -25,6 +26,7 @@ export default function Register() {
       [Yup.ref("password"), null],
       "Passwords must match!"
     ),
+    employee: Yup.boolean(),
     agreed: Yup.boolean()
       .oneOf([true], "You must agree to the terms & conditions.")
       .required("You must agree to the terms & conditions."),
@@ -105,6 +107,18 @@ export default function Register() {
                 <ErrorMessage name="repassword" />
               </div>
             </div>
+            <div className="mb-3 form-check">
+              <Field
+                type="checkbox"
+                id="employee"
+                className="form-check-input"
+                name="employee"
+              />
+              <label htmlFor="employee" className="form-check-label">
+                Register me as an employee of Shopy
+              </label>
+            </div>
+
             <div className="mb-3 form-check">
               <Field
                 type="checkbox"
