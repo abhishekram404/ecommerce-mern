@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
       return res.status(400).send({
         success: false,
         data: null,
-        details: error.details[0].message,
+        message: error.details[0].message,
       });
     }
     const { name, email, password, employee } = await req.body;
@@ -23,14 +23,14 @@ exports.register = async (req, res) => {
       return res.status(400).send({
         success: false,
         data: null,
-        details: "Email already exists. Please login",
+        message: "Email already exists. Please login",
       });
     }
 
     const hashedPassword = await bcrpyt.hash(password.trim(), 10);
 
     if (employee) {
-      const newEmployee = await Employee.create({
+      await Employee.create({
         name: capitalize.words(name.trim()),
         email: email.trim(),
         password: hashedPassword,
@@ -39,28 +39,28 @@ exports.register = async (req, res) => {
 
       return res.status(200).send({
         success: true,
-        data: newEmployee,
-        details: "Registration successful. Please login",
+        data: null,
+        message: "Registration successful. Please login",
       });
     }
 
     // else register as a customer
-    const newCustomer = await Customer.create({
+    await Customer.create({
       name: capitalize.words(name.trim()),
       email: email.trim(),
       password: hashedPassword,
     });
     return res.status(200).send({
       success: true,
-      data: newCustomer,
-      details: "Registration successful. Please login",
+      data: null,
+      message: "Registration successful. Please login",
     });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({
       success: false,
-      data: null,
-      details: error,
+      data: error,
+      message: error.message,
     });
   }
 };

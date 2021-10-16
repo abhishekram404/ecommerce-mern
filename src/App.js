@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import Navbar from "components/Navbar";
 import "./App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,9 +12,47 @@ import { collapse_cart } from "redux/actions/commonActions";
 import { useSelector } from "react-redux";
 import Footer from "components/Footer";
 import Admin from "pages/Admin";
+import { useAlert } from "react-alert";
+import { useEffect } from "react";
+import { CLEAR } from "redux/constants";
 function App() {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const { cartExpanded } = useSelector((state) => state.common);
+  const { type, message } = useSelector((state) => state.alert);
+
+  const isFirstRun = useRef(true);
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+    if (!type || !message) {
+      return;
+    }
+
+    switch (type) {
+      case "SUCCESS":
+        return alert.success(message, {
+          onClose: () => {
+            dispatch({ type: CLEAR });
+          },
+        });
+      case "ERROR":
+        return alert.error(message, {
+          onClose: () => {
+            dispatch({ type: CLEAR });
+          },
+        });
+      default:
+        return alert.info(message, {
+          onClose: () => {
+            dispatch({ type: CLEAR });
+          },
+        });
+    }
+  }, [type, message]);
+
   return (
     <div className="App">
       <BrowserRouter>

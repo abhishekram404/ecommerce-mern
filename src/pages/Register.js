@@ -4,7 +4,11 @@ import FormTemplate from "../components/FormTemplate";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
+import { register_user } from "redux/actions/userActions";
+import { useDispatch } from "react-redux";
 export default function Register() {
+  const dispatch = useDispatch();
+
   const initialValues = {
     name: "",
     email: "",
@@ -33,7 +37,9 @@ export default function Register() {
   });
 
   const onSubmit = (values) => {
-    console.log(values);
+    // console.log(values);
+    // return;
+    dispatch(register_user(values));
   };
 
   return (
