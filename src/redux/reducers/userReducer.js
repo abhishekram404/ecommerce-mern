@@ -4,10 +4,11 @@ import {
   LOGOUT,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  ROLE,
 } from "redux/constants";
 
 const userReducer = (
-  state = { isUserLoggedIn: false, role: "customer", details: null },
+  state = { isUserLoggedIn: false, r: null, details: null },
   action
 ) => {
   switch (action.type) {
@@ -34,7 +35,14 @@ const userReducer = (
       };
     case LOGOUT:
       return {
-        state,
+        isUserLoggedIn: false,
+        r: undefined,
+        details: null,
+      };
+    case ROLE:
+      return {
+        ...state,
+        r: action.payload,
       };
     default:
       return state;

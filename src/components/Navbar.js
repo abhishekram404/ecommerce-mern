@@ -10,7 +10,9 @@ import { logout_user } from "redux/actions/userActions";
 export default function Navbar() {
   const dispatch = useDispatch();
 
-  const { isUserLoggedIn } = useSelector((state) => state.user);
+  const { isUserLoggedIn, r } = useSelector((state) => state.user);
+
+  console.log(r);
 
   return (
     <nav className={clsx("navbar   navbar-expand-lg px-4 py-0")} id="navbar">
@@ -37,11 +39,19 @@ export default function Navbar() {
 
           {isUserLoggedIn ? (
             <>
-              <li className="nav-item nav">
-                <Link to="/admin" className="nav-link">
-                  Admin
-                </Link>
-              </li>
+              {r === ("A" || "E") ? (
+                <li className="nav-item nav">
+                  <Link to="/admin" className="nav-link">
+                    Admin
+                  </Link>
+                </li>
+              ) : (
+                <li className="nav-item nav">
+                  <Link to="/profile" className="nav-link">
+                    Profile
+                  </Link>
+                </li>
+              )}
               <li className="nav-item nav">
                 <div
                   role="button"

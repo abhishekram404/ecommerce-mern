@@ -6,6 +6,7 @@ import {
   LOGOUT,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  ROLE,
   SUCCESS,
 } from "redux/constants";
 import Cookies from "js-cookie";
@@ -37,6 +38,7 @@ export const login_user = (formData) => {
       const { data } = await axios.post("/login", formData);
 
       if (data.success) {
+        dispatch(check_role());
         dispatch({ type: SUCCESS, payload: data.message });
         dispatch({ type: LOGIN_SUCCESS, payload: data });
         return;
@@ -77,10 +79,11 @@ export const logout_user = () => {
 export const check_login = () => {
   return async (dispatch) => {
     try {
-      const isCookieAvailable = await Cookies.get("isUserLoggedIn");
-      if (isCookieAvailable) {
+      const isUserLoggedIn = await Cookies.get("isUserLoggedIn");
+      if (isUserLoggedIn) {
         dispatch({ type: SUCCESS, payload: "Login successful" });
         dispatch({ type: LOGIN_SUCCESS, payload: null });
+        dispatch(check_role());
         return;
       }
 
@@ -90,6 +93,19 @@ export const check_login = () => {
     } catch (error) {
       dispatch({ type: ERROR, payload: "Login failed" });
       dispatch({ type: LOGIN_FAIL, payload: null });
+    }
+  };
+};
+
+export const check_role = () => {
+  return async (dispatch) => {
+    try {
+      const r = await Cookies.get("r");
+
+      dispatch({ type: ROLE, payload: r });
+      return;
+    } catch (error) {
+      dispatch({ type: ROLE, payload: "C" });
     }
   };
 };

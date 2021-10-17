@@ -40,7 +40,7 @@ exports.register = async (req, res) => {
         name: capitalize.words(name.trim()),
         email: email.trim(),
         password: hashedPassword,
-        role: "Admin",
+        role: "Employee",
       });
 
       return res.status(200).send({
@@ -78,11 +78,14 @@ exports.login = async (req, res) => {
     let found = await Employee.findOne({ email: email.trim() }).select(
       "+password"
     );
+
     if (!found) {
       found = await Customer.findOne({ email: email.trim() }).select(
         "+password"
       );
     }
+
+    console.log(found);
 
     if (!found) {
       return res.status(400).send({
@@ -91,6 +94,8 @@ exports.login = async (req, res) => {
         message: "Email is not correct. Please check your email again. ",
       });
     }
+
+    let role = await found.role;
 
     // res.send(found);
     const isPasswordCorrect = await bcrpyt.compare(password, found.password);
@@ -111,6 +116,11 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET || "SUPERSECRETJWTKEY",
       { expiresIn: "2d" }
     );
+    res.cookie("r", role?.[0] || "C", {
+      maxAge: 1000 * 60 * 60 * 48,
+      secure: false,
+      httpOnly: false,
+    });
 
     res.cookie("isUserLoggedIn", true, {
       maxAge: 1000 * 60 * 60 * 48,
@@ -140,6 +150,7 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
+    res.clearCookie("r");
     res.clearCookie("isUserLoggedIn");
     res.clearCookie("jwt");
     res.status(200).send({
@@ -148,6 +159,7 @@ exports.logout = async (req, res) => {
       message: "Logged out",
     });
   } catch (error) {
+    res.clearCookie("r");
     res.clearCookie("isUserLoggedIn");
     res.clearCookie("jwt");
     res.status(200).send({
