@@ -49,6 +49,16 @@ export const login_user = (formData) => {
   };
 };
 
+// export const logout_user = () =>{
+//   return async (dispatch)=>{
+//     try {
+
+//     } catch (error) {
+
+//     }
+//   }
+// }
+
 export const check_login = () => {
   return async (dispatch) => {
     try {

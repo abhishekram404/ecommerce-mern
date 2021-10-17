@@ -4,10 +4,12 @@ import "styles/Navbar.scss";
 import cartIcon from "assets/cart-logo-white.svg";
 import { CgMenuRightAlt } from "react-icons/cg";
 import clsx from "clsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggle_cart } from "redux/actions/commonActions";
 export default function Navbar() {
   const dispatch = useDispatch();
+
+  const { isUserLoggedIn } = useSelector((state) => state.user);
 
   return (
     <nav className={clsx("navbar   navbar-expand-lg px-4 py-0")} id="navbar">
@@ -31,21 +33,35 @@ export default function Navbar() {
               About
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/login" className="nav-link">
-              Login
-            </Link>
-          </li>
-          <li className="nav-item nav">
-            <Link to="/admin" className="nav-link">
-              Admin
-            </Link>
-          </li>
-          <li className="nav-item nav-cta">
-            <Link to="/register" className="nav-link">
-              Register
-            </Link>
-          </li>
+
+          {isUserLoggedIn ? (
+            <>
+              <li className="nav-item nav">
+                <Link to="/admin" className="nav-link">
+                  Admin
+                </Link>
+              </li>
+              <li className="nav-item nav">
+                <div role="button" className="nav-link">
+                  Logout
+                </div>
+              </li>
+            </>
+          ) : (
+            <>
+              {" "}
+              <li className="nav-item">
+                <Link to="/login" className="nav-link">
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item nav-cta">
+                <Link to="/register" className="nav-link">
+                  Register
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
         {/* )} */}
         <div className="nav-cart ms-1" onClick={() => dispatch(toggle_cart())}>

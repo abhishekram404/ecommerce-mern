@@ -16,6 +16,7 @@ import { useAlert } from "react-alert";
 import { useEffect } from "react";
 import { CLEAR } from "redux/constants";
 import { check_login } from "redux/actions/userActions";
+import ProtectedRoute from "components/ProtectedRoute";
 function App() {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ function App() {
             <Route path="/" exact component={Homepage} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            <Route path="/admin" component={Admin} />
+            <ProtectedRoute path="/admin" component={Admin} />
             <Route path="*">
               <h1>Error 404! Page Not found </h1>;
             </Route>

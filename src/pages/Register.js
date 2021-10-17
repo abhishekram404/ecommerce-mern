@@ -1,14 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import FormTemplate from "../components/FormTemplate";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
 import { register_user } from "redux/actions/userActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 export default function Register() {
+  const { isUserLoggedIn } = useSelector((state) => state.user);
+  const history = useHistory();
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    if (isUserLoggedIn) {
+      history.push("/");
+    }
+  });
   const initialValues = {
     name: "",
     email: "",
