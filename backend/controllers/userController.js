@@ -3,6 +3,7 @@ const Customer = require("../models/customer.model");
 const registerValidate = require("../utils/registerValidate");
 const bcrpyt = require("bcrypt");
 const capitalize = require("capitalize");
+const jwt = require("jsonwebtoken");
 
 exports.all = async (req, res) => {
   console.log(req.session);
@@ -102,11 +103,25 @@ exports.login = async (req, res) => {
       });
     }
 
-    // res.cookie("jwt", "1234", {
-    //   maxAge: 2000000000000,
-    //   secure: false,
-    //   httpOnly: false,
-    // });
+    const token = await jwt.sign(
+      {
+        _id: found._id,
+        email: found.email,
+      },
+      process.env.JWT_SECRET || "SUPERSECRETJWTKEY",
+      { expiresIn: "2d" }
+    );
+
+    res.cookie("isUserLoggedIn", true, {
+      maxAge: 1000 * 60 * 60 * 48,
+      secure: false,
+      httpOnly: false,
+    });
+    res.cookie("jwt", token, {
+      maxAge: 1000 * 60 * 60 * 48,
+      secure: false,
+      httpOnly: true,
+    });
 
     return res.status(200).send({
       success: true,

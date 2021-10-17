@@ -10,8 +10,13 @@ const router = require("./routes/routes");
 const cookieParser = require("cookie-parser");
 dotenv.config();
 
-app.use(cors());
 app.use(cookieParser());
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
 app.use(
   bodyParser.urlencoded({
     extended: true,

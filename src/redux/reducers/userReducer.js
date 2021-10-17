@@ -6,7 +6,7 @@ import {
 } from "redux/constants";
 
 const userReducer = (
-  state = { isUserLoggedIn: false, role: "customer" },
+  state = { isUserLoggedIn: false, role: "customer", details: null },
   action
 ) => {
   switch (action.type) {

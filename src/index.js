@@ -9,6 +9,7 @@ import axios from "axios";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 axios.defaults.baseURL = "http://localhost:3001/api";
+axios.defaults.withCredentials = true;
 
 const options = {
   position: positions.BOTTOM_LEFT,
