@@ -7,6 +7,7 @@ import {
   REGISTER_SUCCESS,
   SUCCESS,
 } from "redux/constants";
+import Cookies from "js-cookie";
 
 export const register_user = (formData) => {
   return async (dispatch) => {
@@ -44,6 +45,26 @@ export const login_user = (formData) => {
       dispatch({ type: ERROR, payload: err?.response?.data.message });
       dispatch({ type: LOGIN_FAIL, payload: err?.response?.data.message });
       return;
+    }
+  };
+};
+
+export const check_login = () => {
+  return async (dispatch) => {
+    try {
+      const isCookieAvailable = await Cookies.get("isUserLoggedIn");
+      if (isCookieAvailable) {
+        dispatch({ type: SUCCESS, payload: "Login successful" });
+        dispatch({ type: LOGIN_SUCCESS, payload: null });
+        return;
+      }
+
+      dispatch({ type: ERROR, payload: "Login failed" });
+      dispatch({ type: LOGIN_FAIL, payload: null });
+      return;
+    } catch (error) {
+      dispatch({ type: ERROR, payload: "Login failed" });
+      dispatch({ type: LOGIN_FAIL, payload: null });
     }
   };
 };

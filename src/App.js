@@ -15,6 +15,7 @@ import Admin from "pages/Admin";
 import { useAlert } from "react-alert";
 import { useEffect } from "react";
 import { CLEAR } from "redux/constants";
+import { check_login } from "redux/actions/userActions";
 function App() {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -30,7 +31,6 @@ function App() {
     if (!type || !message) {
       return;
     }
-
     switch (type) {
       case "SUCCESS":
         return alert.success(message, {
@@ -52,6 +52,10 @@ function App() {
         });
     }
   }, [type, message]);
+
+  useEffect(() => {
+    dispatch(check_login());
+  }, []);
 
   return (
     <div className="App">
