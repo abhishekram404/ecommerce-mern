@@ -4,7 +4,10 @@ import FormTemplate from "../components/FormTemplate";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
+import { useDispatch } from "react-redux";
+import { login_user } from "redux/actions/userActions";
 export default function Login() {
+  const dispatch = useDispatch();
   const initialValues = {
     email: "",
     password: "",
@@ -20,7 +23,7 @@ export default function Login() {
   });
 
   const onSubmit = (values) => {
-    console.log(values);
+    dispatch(login_user(values));
   };
 
   return (

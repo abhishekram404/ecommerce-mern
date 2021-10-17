@@ -1,4 +1,9 @@
-import { REGISTER_FAIL, REGISTER_SUCCESS } from "redux/constants";
+import {
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
+} from "redux/constants";
 
 const userReducer = (
   state = { isUserLoggedIn: false, role: "customer" },
@@ -14,6 +19,17 @@ const userReducer = (
       return {
         ...state,
         details: action.payload,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isUserLoggedIn: true,
+      };
+
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        isUserLoggedIn: false,
       };
     default:
       return state;

@@ -37,8 +37,6 @@ export default function Register() {
   });
 
   const onSubmit = (values) => {
-    // console.log(values);
-    // return;
     dispatch(register_user(values));
   };
 
