@@ -4,6 +4,11 @@ const registerValidate = require("../utils/registerValidate");
 const bcrpyt = require("bcrypt");
 const capitalize = require("capitalize");
 
+exports.all = async (req, res) => {
+  console.log(req.session);
+  res.send(req.session);
+};
+
 exports.register = async (req, res) => {
   try {
     const { error } = await registerValidate(req.body);
@@ -54,6 +59,59 @@ exports.register = async (req, res) => {
       success: true,
       data: null,
       message: "Registration successful. Please login",
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({
+      success: false,
+      data: error,
+      message: error.message,
+    });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password, remember } = await req.body;
+
+    let found = await Employee.findOne({ email: email.trim() }).select(
+      "+password"
+    );
+    if (!found) {
+      found = await Customer.findOne({ email: email.trim() }).select(
+        "+password"
+      );
+    }
+
+    if (!found) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: "Email is not correct. Please check your email again. ",
+      });
+    }
+
+    // res.send(found);
+    const isPasswordCorrect = await bcrpyt.compare(password, found.password);
+
+    if (!isPasswordCorrect) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: "Password is incorrect.",
+      });
+    }
+
+    // res.cookie("jwt", "1234", {
+    //   maxAge: 2000000000000,
+    //   secure: false,
+    //   httpOnly: false,
+    // });
+
+    return res.status(200).send({
+      success: true,
+      data: null,
+      message: "Login successful.",
     });
   } catch (error) {
     console.log(error.message);

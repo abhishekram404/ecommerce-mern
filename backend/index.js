@@ -7,9 +7,11 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const router = require("./routes/routes");
+const cookieParser = require("cookie-parser");
 dotenv.config();
 
 app.use(cors());
+app.use(cookieParser());
 app.use(
   bodyParser.urlencoded({
     extended: true,
