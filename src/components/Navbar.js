@@ -6,6 +6,7 @@ import { CgMenuRightAlt } from "react-icons/cg";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle_cart } from "redux/actions/commonActions";
+import { logout_user } from "redux/actions/userActions";
 export default function Navbar() {
   const dispatch = useDispatch();
 
@@ -42,7 +43,11 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item nav">
-                <div role="button" className="nav-link">
+                <div
+                  role="button"
+                  className="nav-link"
+                  onClick={() => dispatch(logout_user())}
+                >
                   Logout
                 </div>
               </li>

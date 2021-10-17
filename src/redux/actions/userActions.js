@@ -3,11 +3,13 @@ import {
   ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
   SUCCESS,
 } from "redux/constants";
 import Cookies from "js-cookie";
+// import history from "../../history";
 
 export const register_user = (formData) => {
   return async (dispatch) => {
@@ -16,6 +18,7 @@ export const register_user = (formData) => {
       if (data.success) {
         dispatch({ type: SUCCESS, payload: data.message });
         dispatch({ type: REGISTER_SUCCESS, payload: data });
+        // history.push("/login");
         return;
       }
 
@@ -49,15 +52,27 @@ export const login_user = (formData) => {
   };
 };
 
-// export const logout_user = () =>{
-//   return async (dispatch)=>{
-//     try {
+export const logout_user = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get("/logout");
 
-//     } catch (error) {
-
-//     }
-//   }
-// }
+      if (data.success) {
+        dispatch({ type: SUCCESS, payload: data.message });
+        dispatch({ type: LOGOUT });
+        // history.push("/login");
+        return;
+      }
+      dispatch({ type: SUCCESS, payload: data.message });
+      dispatch({ type: LOGOUT });
+      // history.push("/login");
+    } catch (error) {
+      dispatch({ type: SUCCESS, payload: error?.response?.data.message });
+      dispatch({ type: LOGOUT });
+      // history.push("/login");
+    }
+  };
+};
 
 export const check_login = () => {
   return async (dispatch) => {

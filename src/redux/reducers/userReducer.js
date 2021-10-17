@@ -1,6 +1,7 @@
 import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
 } from "redux/constants";
@@ -30,6 +31,10 @@ const userReducer = (
       return {
         ...state,
         isUserLoggedIn: false,
+      };
+    case LOGOUT:
+      return {
+        state,
       };
     default:
       return state;

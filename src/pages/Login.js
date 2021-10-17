@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, withRouter } from "react-router-dom";
 import FormTemplate from "../components/FormTemplate";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { login_user } from "redux/actions/userActions";
-export default function Login() {
+function Login() {
   const history = useHistory();
   const { isUserLoggedIn } = useSelector((state) => state.user);
 
@@ -112,3 +112,4 @@ export default function Login() {
     </FormTemplate>
   );
 }
+export default withRouter(Login);

@@ -137,3 +137,23 @@ exports.login = async (req, res) => {
     });
   }
 };
+
+exports.logout = async (req, res) => {
+  try {
+    res.clearCookie("isUserLoggedIn");
+    res.clearCookie("jwt");
+    res.status(200).send({
+      success: true,
+      data: null,
+      message: "Logged out",
+    });
+  } catch (error) {
+    res.clearCookie("isUserLoggedIn");
+    res.clearCookie("jwt");
+    res.status(200).send({
+      success: true,
+      data: null,
+      message: "Logged out",
+    });
+  }
+};
