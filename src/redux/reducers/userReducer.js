@@ -8,7 +8,7 @@ import {
 } from "redux/constants";
 
 const userReducer = (
-  state = { isUserLoggedIn: false, r: null, details: null },
+  state = { isUserLoggedIn: false, r: "C", details: null },
   action
 ) => {
   switch (action.type) {
@@ -36,7 +36,7 @@ const userReducer = (
     case LOGOUT:
       return {
         isUserLoggedIn: false,
-        r: undefined,
+        r: "C",
         details: null,
       };
     case ROLE:

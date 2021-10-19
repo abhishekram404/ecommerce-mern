@@ -17,7 +17,6 @@ import { useEffect } from "react";
 import { CLEAR } from "redux/constants";
 import { check_login } from "redux/actions/userActions";
 import ProtectedRoute from "components/ProtectedRoute";
-import history from "./history";
 function App() {
   const alert = useAlert();
   const dispatch = useDispatch();
