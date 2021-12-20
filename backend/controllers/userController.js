@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
       );
     }
 
-    console.log(found);
+    // console.log(found);
 
     if (!found) {
       return res.status(400).send({
@@ -97,7 +97,6 @@ exports.login = async (req, res) => {
 
     let role = await found.role;
 
-    // res.send(found);
     const isPasswordCorrect = await bcrpyt.compare(password, found.password);
 
     if (!isPasswordCorrect) {

@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3002",
+    origin: "http://localhost:3000",
   })
 );
 app.use(
@@ -25,7 +25,8 @@ app.use(
 app.use(bodyParser.json());
 
 mongoose.connect(
-  process.env.MONGO_URI,
+  // process.env.NODE_ENV === 'production'? "":
+  process.env.MONGO_URI || "mongodb://localhost:27017/ecommerce",
   (err) => {
     if (err) {
       console.log("❌ Error connecting to DB  ");
