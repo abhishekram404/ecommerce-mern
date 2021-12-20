@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "styles/Product.scss";
 import placeholderImage from "assets/phone.jfif";
 import ReactStars from "react-rating-stars-component";
-export default function ProductCustomer() {
+export default function ProductCustomer(props) {
   return (
     <div className="product">
       <div className="row img-row">
@@ -12,22 +12,28 @@ export default function ProductCustomer() {
         </div>
       </div>
       <div className="row detail-row align-items-center">
-        <div className="product-name col-10">Red stationary vase</div>
-        <div className="product-price col-2">$25</div>
+        <div className="product-name col-10">{props.name}</div>
+        <div className="product-price col-2">${props.rate}</div>
       </div>
       <div className="row rating-row">
         <div className="ratings col">
           <ReactStars />
         </div>
-        <div className="col-4 text-end text-success">Available</div>
+        {props.quantity > 10 ? (
+          <div className="col-4 text-end text-success">Available</div>
+        ) : (
+          <div className="col-4 text-end text-danger">
+            Only {props.quantity ?? "few"} left
+          </div>
+        )}
       </div>
-      <div className="row seller-row">
+      {/* <div className="row seller-row">
         <div className="col seller-name">Seller :</div>
-      </div>
+      </div> */}
       <div className="row buttons-row mt-2">
         <div className="col">
-          <Link to="chat-with-seller" className="chat-btn btn w-100">
-            Chat with seller
+          <Link to="view-product" className="chat-btn btn w-100">
+            View product
           </Link>
         </div>
         <div className="col">

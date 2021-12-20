@@ -1,24 +1,25 @@
 import ProductCustomer from "components/ProductCustomer";
-import React from "react";
+import React, { useEffect } from "react";
 import "styles/Homepage.scss";
 import categoryImage1 from "assets/gummy-coffee 1.svg";
 import RoleRestrict from "components/RoleRestrict";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "redux/actions/productActions";
 export default function Homepage() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, []);
+
+  const { products } = useSelector((state) => state.product);
   return (
     <RoleRestrict onlyFor={["C"]}>
       <div className="homepage">
         <div className="page-1">
           <h2 className="page-title">Our featured products</h2>
           <div className="products-list">
-            <ProductCustomer />
-            <ProductCustomer />
-            <ProductCustomer />
-            <ProductCustomer />
-            <ProductCustomer />
-            <ProductCustomer />
-            <ProductCustomer />
-            <ProductCustomer />
-            <ProductCustomer />
+            {products &&
+              products.map((product) => <ProductCustomer {...product} />)}
           </div>
           <button className="btn mx-auto my-4 px-4 show-more-btn">
             Show more

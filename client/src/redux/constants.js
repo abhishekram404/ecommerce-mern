@@ -10,3 +10,5 @@ export const SUCCESS = "SUCCESS";
 export const ERROR = "ERROR";
 export const CLEAR = "CLEAR";
 export const ROLE = "ROLE";
+export const GET_ALL_PRODUCTS_SUCCESS = "GET_ALL_PRODUCTS_SUCCESS";
+export const GET_ALL_PRODUCTS_FAIL = "GET_ALL_PRODUCTS_FAIL";

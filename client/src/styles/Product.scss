@@ -9,6 +9,8 @@
   border-radius: 20px;
   overflow: hidden;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
   .stock-row,
   .category-row {
     .stock,
@@ -39,13 +41,15 @@
     }
   }
   .detail-row {
+    flex: 1;
     .product-name,
     .product-price {
       font-family: "Lato";
       color: $textColorProductName;
     }
     .product-name {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
+      flex: 1;
     }
     .product-price {
       font-size: 1rem;
