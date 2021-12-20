@@ -74,7 +74,7 @@ export default function EditProduct(props) {
                       name="category"
                     >
                       <option value="all">All</option>
-                      <option value="foods&drinks">Foods & drinks</option>
+                      <option value="food&drinks">Food & drinks</option>
                       <option value="electronics">Electronics</option>
                       <option value="beauty&cosmetics">
                         Beauty & cosmetics
