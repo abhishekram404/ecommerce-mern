@@ -6,7 +6,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const router = require("./routes/routes");
+const userRoutes = require("./routes/user.routes");
+const productRoutes = require("./routes/product.routes");
 const cookieParser = require("cookie-parser");
 dotenv.config();
 
@@ -45,7 +46,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.use("/api", router);
+app.use("/api/user", userRoutes);
+app.use("/api/product", productRoutes);
 
 app.listen(port, () => {
   console.log(`🎧  Listening on port ${port}`);

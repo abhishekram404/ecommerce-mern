@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 export const register_user = (formData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("/register", formData);
+      const { data } = await axios.post("/user/register", formData);
       if (data.success) {
         dispatch({ type: SUCCESS, payload: data.message });
         dispatch({ type: REGISTER_SUCCESS, payload: data });
@@ -35,7 +35,7 @@ export const register_user = (formData) => {
 export const login_user = (formData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("/login", formData);
+      const { data } = await axios.post("/user/login", formData);
 
       if (data.success) {
         dispatch(check_role());
