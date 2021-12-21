@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "styles/Products.scss";
 import ProductAdmin from "components/ProductAdmin";
 import { Route, Switch, useRouteMatch, Link } from "react-router-dom";
 import EditProduct from "./EditProduct";
 import { IoMdAdd } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "redux/actions/productActions";
 
 export default function Products() {
+  const dispatch = useDispatch();
   const { url } = useRouteMatch();
+
+  const { products } = useSelector((state) => state.product);
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, []);
   return (
     <Switch>
       <Route path={`${url}/`} exact>
@@ -49,39 +57,10 @@ export default function Products() {
               <IoMdAdd className="add-icon mb-4" />
               <h4>Add a new product</h4>
             </Link>
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
-            <ProductAdmin />
+            {products &&
+              products.map((product) => (
+                <ProductAdmin {...product} key={product._id} />
+              ))}
           </div>
         </div>
       </Route>
