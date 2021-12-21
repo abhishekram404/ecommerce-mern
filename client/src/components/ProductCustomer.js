@@ -4,26 +4,32 @@ import "styles/Product.scss";
 import placeholderImage from "assets/phone.jfif";
 import ReactStars from "react-rating-stars-component";
 export default function ProductCustomer(props) {
+  console.log(props);
   return (
     <div className="product">
       <div className="row img-row">
         <div className="img-cont">
-          <img src={placeholderImage} alt="" />
+          <img
+            src={
+              props?.productImages ? props.productImages[0] : placeholderImage
+            }
+            alt=""
+          />
         </div>
       </div>
       <div className="row detail-row align-items-center">
         <div className="product-name col-10">{props.name}</div>
-        <div className="product-price col-2">${props.rate}</div>
+        <div className="product-price col-2">${props.price}</div>
       </div>
       <div className="row rating-row">
         <div className="ratings col">
           <ReactStars />
         </div>
-        {props.quantity > 10 ? (
+        {props.stock > 10 ? (
           <div className="col-4 text-end text-success">Available</div>
         ) : (
           <div className="col-4 text-end text-danger">
-            Only {props.quantity ?? "few"} left
+            Only {props.stock ?? "few"} left
           </div>
         )}
       </div>

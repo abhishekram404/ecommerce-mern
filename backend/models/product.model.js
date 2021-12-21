@@ -12,16 +12,16 @@ const categoriesList = [
 
 const productSchema = mongoose.Schema({
   name: { type: String },
-  rate: { type: Number },
+  price: { type: Number },
   category: {
     type: [String],
     enum: categoriesList,
     default: categoriesList[0],
   },
-  quantity: { type: Number },
+  stock: { type: Number },
   tags: { type: [String] },
   description: { type: String },
-  images: { type: [String] },
+  productImages: { type: [String] },
   rating: { type: Number, default: 0 },
 });
 

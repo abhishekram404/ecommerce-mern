@@ -57,7 +57,7 @@ export const login_user = (formData) => {
 export const logout_user = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/logout");
+      const { data } = await axios.get("/user/logout");
 
       if (data.success) {
         dispatch({ type: SUCCESS, payload: data.message });

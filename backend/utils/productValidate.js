@@ -7,14 +7,14 @@ const productValidate = (data) => {
       .max(100)
       .trim()
       .required("A product name is required."),
-    rate: Joi.number().required("Price is required for product."),
-    category: Joi.array()
-      .items(Joi.string().trim())
-      .required("You must select at least one category for the product."),
-    quantity: Joi.number(),
+    price: Joi.number().required("Price is required for product."),
+    category: Joi.string()
+      .trim()
+      .required("You must select a category for the product."),
+    stock: Joi.number(),
     tags: Joi.array().items(Joi.string()),
     description: Joi.string().max(600).trim(),
-    images: Joi.array().items(Joi.string()),
+    productImages: Joi.array().items(Joi.string()),
 
     // trags: Joi.boolean()
     //   .valid(true)

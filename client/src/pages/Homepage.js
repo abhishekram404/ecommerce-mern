@@ -19,7 +19,9 @@ export default function Homepage() {
           <h2 className="page-title">Our featured products</h2>
           <div className="products-list">
             {products &&
-              products.map((product) => <ProductCustomer {...product} />)}
+              products.map((product) => (
+                <ProductCustomer {...product} key={product._id} />
+              ))}
           </div>
           <button className="btn mx-auto my-4 px-4 show-more-btn">
             Show more

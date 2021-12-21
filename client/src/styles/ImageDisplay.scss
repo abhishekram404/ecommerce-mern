@@ -1,20 +1,31 @@
 @import "globals.scss";
 .image-display {
+  min-height: 400px;
+  display: grid;
+  place-items: center;
+  font-family: "Lato", sans-serif;
+  flex: 1;
+  h6 {
+    font-size: 1.4rem;
+  }
   .image-preview {
     width: 400px;
-    height: 400px;
+    max-height: 800px;
     margin: 0 auto;
     display: grid;
     place-items: center;
+    padding: 20px;
     img {
       width: 80%;
     }
   }
   .img-choose {
+    width: 100%;
     .options {
+      width: 100%;
       display: grid;
       place-items: center;
-      grid-template-columns: repeat(6, 100px);
+      grid-template-columns: repeat(auto-fit, minmax(100px, 100px));
       gap: 5px;
       img {
         width: 100px;

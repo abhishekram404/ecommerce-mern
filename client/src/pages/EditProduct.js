@@ -4,14 +4,16 @@ import ImageDisplay from "components/ImageDisplay";
 import "styles/EditProduct.scss";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { sendProductAddRequest } from "redux/actions/productActions";
 export default function EditProduct(props) {
+  const dispatch = useDispatch();
   const [uploadImages, setUploadImages] = useState([]);
-  // const { id } = useParams();
   const initialValues = {
     name: "",
-    price: undefined,
-    category: "all",
-    stock: undefined,
+    price: 0,
+    category: "uncategorized",
+    stock: 0,
     tags: "",
     description: "",
     productImages: [],
@@ -19,7 +21,7 @@ export default function EditProduct(props) {
 
   const validationSchema = Yup.object({
     name: Yup.string(),
-    price: Yup.string(),
+    price: Yup.number(),
     category: Yup.string(),
     stock: Yup.number(),
     tags: Yup.string(),
@@ -28,18 +30,27 @@ export default function EditProduct(props) {
   });
 
   const onSubmit = (values) => {
-    // console.log(values);
-    let newObj = Object.assign({}, values, { productImages: uploadImages });
-    // newObj.productImages = uploadImages;
+    let { tags } = values;
+    let tagsArray = tags.split(",").map((tag) => tag.trim());
+    let newObj = Object.assign(
+      {},
+      values,
+      { productImages: uploadImages },
+      { tags: tagsArray }
+    );
     console.log(newObj);
+    if (props.mode === "add") {
+      dispatch(sendProductAddRequest(newObj));
+    }
   };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {(props) => (
+      {(formikProps) => (
         <div className="edit-product p-3">
           <h2 className="page-title mb-0">
             {props.mode === "add" ? "Add product" : "Edit product"}
@@ -59,7 +70,7 @@ export default function EditProduct(props) {
                   <label htmlFor="name" className="form-label">
                     Price <small>(per item)</small>
                   </label>
-                  <Field name="price" type="text" className="form-control" />
+                  <Field name="price" type="number" className="form-control" />
                 </div>
                 <div className="mb-3 row">
                   <div className="col">
@@ -73,12 +84,15 @@ export default function EditProduct(props) {
                       id="category"
                       name="category"
                     >
-                      <option value="all">All</option>
-                      <option value="food&drinks">Food & drinks</option>
-                      <option value="electronics">Electronics</option>
-                      <option value="beauty&cosmetics">
+                      <option value="Uncategorized">Uncategorized</option>
+                      <option value="Food & drinks">Food & drinks</option>
+                      <option value="Electronics">Electronics</option>
+                      <option value="Beauty & cosmetics">
                         Beauty & cosmetics
                       </option>
+                      <option value="Kitchen">Kitchen</option>
+                      <option value="Clothings">Clothings</option>
+                      <option value="Smartphones">Smartphones</option>
                     </Field>
                   </div>
                   <div className="col">
@@ -139,9 +153,9 @@ export default function EditProduct(props) {
                 <h3 className="page-title text-center">Product Images</h3>
                 <ImageDisplay
                   upload={true}
-                  {...props}
-                  fileProp={(file) => {
-                    setUploadImages(file);
+                  {...formikProps}
+                  fileProp={(files) => {
+                    setUploadImages(files);
                   }}
                 />
               </div>
