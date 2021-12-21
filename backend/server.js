@@ -10,8 +10,8 @@ const userRoutes = require("./routes/user.routes");
 const productRoutes = require("./routes/product.routes");
 const cookieParser = require("cookie-parser");
 dotenv.config();
-
 app.use(cookieParser());
+
 app.use(
   cors({
     credentials: true,

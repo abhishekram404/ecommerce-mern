@@ -23,6 +23,11 @@ const productSchema = mongoose.Schema({
   description: { type: String },
   productImages: { type: [String] },
   rating: { type: Number, default: 0 },
+  seller: {
+    _id: { type: mongoose.Types.ObjectId },
+    name: String,
+    email: String,
+  },
 });
 
 const Product = mongoose.model("Product", productSchema);

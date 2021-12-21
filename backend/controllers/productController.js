@@ -1,9 +1,11 @@
+const Employee = require("../models/employee.model");
 const Product = require("../models/product.model");
 const productValidate = require("../utils/productValidate");
 
 module.exports.createProduct = async (req, res) => {
   try {
     const { value, error } = await productValidate(req.body);
+
     if (error) {
       return res.status(400).send({
         success: false,
@@ -11,8 +13,17 @@ module.exports.createProduct = async (req, res) => {
         message: error.details[0].message,
       });
     }
+    let seller = await Employee.findById(await req.authorizedUser._id).lean();
 
-    const product = await Product.create(value);
+    const product = await Product.create({
+      ...value,
+      seller: {
+        _id: seller._id,
+        name: seller.name,
+        email: seller.email,
+      },
+    });
+
     return res.status(200).send({
       success: true,
       message: "Products created successfully.",

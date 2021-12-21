@@ -30,7 +30,9 @@ export const getAllProducts = () => {
 export const sendProductAddRequest = (product) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("/product/create", product);
+      const { data } = await axios.post("/product/create", product, {
+        withCredentials: true,
+      });
       console.log(data);
       if (data.success) {
         return dispatch({

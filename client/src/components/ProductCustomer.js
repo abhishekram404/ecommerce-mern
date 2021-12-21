@@ -4,7 +4,6 @@ import "styles/Product.scss";
 import placeholderImage from "assets/phone.jfif";
 import ReactStars from "react-rating-stars-component";
 export default function ProductCustomer(props) {
-  console.log(props);
   return (
     <div className="product">
       <div className="row img-row">
