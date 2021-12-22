@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "styles/Products.scss";
 import ProductAdmin from "components/ProductAdmin";
 import { Route, Switch, useRouteMatch, Link } from "react-router-dom";
@@ -7,11 +7,15 @@ import { IoMdAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "redux/actions/productActions";
 import { MdRefresh } from "react-icons/md";
-
+import { debounce } from "lodash";
 export default function Products() {
   const dispatch = useDispatch();
   const { url } = useRouteMatch();
-
+  const [filterResults, setFilterResults] = useState([]);
+  const [resultMessage, setResultMessage] = useState({
+    noOfResult: undefined,
+    message: "",
+  });
   const { products } = useSelector((state) => state.product);
   useEffect(() => {
     dispatch(getAllProducts());
@@ -20,6 +24,44 @@ export default function Products() {
   const refreshFetchedProducts = () => {
     dispatch(getAllProducts());
   };
+  const searchProduct = async (query) => {
+    setResultMessage({
+      noOfResult: undefined,
+      message: "",
+    });
+    const pattern = new RegExp(`${query}.*`, "gi");
+    let r = await products.filter(
+      (product) =>
+        pattern.test(product.name.toLowerCase()) ||
+        pattern.test(product.description.toLowerCase())
+    );
+    setResultMessage({
+      noOfResult: r.length,
+      message: r.length
+        ? `${r.length} search results found for query '${query}'`
+        : `No search results found for query ${query}`,
+    });
+    setFilterResults(r);
+  };
+
+  const filterByCategory = (category) => {
+    setResultMessage({
+      noOfResult: undefined,
+      message: "",
+    });
+    console.log(category);
+    console.log(products);
+    let r = products.filter((product) => product.category.includes(category));
+    console.log(r);
+    setFilterResults(r);
+    setResultMessage({
+      message: r.length
+        ? `${r.length} search results found for category ${category}`
+        : `No search results found for category ${category}`,
+    });
+  };
+  const debouncedSearch = useCallback(debounce(searchProduct, 500), [products]);
+
   return (
     <Switch>
       <Route path={`${url}/`} exact>
@@ -34,8 +76,9 @@ export default function Products() {
                 Search product : &nbsp;
               </label>
               <input
-                type="text"
+                type="search"
                 className="form-control form-control-sm w-auto"
+                onChange={(e) => debouncedSearch(e.target.value)}
               />
             </form>
 
@@ -47,11 +90,15 @@ export default function Products() {
                 className="form-select form-select-sm w-50"
                 id="category"
                 defaultValue="all"
+                onChange={(e) => filterByCategory(e.target.value)}
               >
-                <option value="all">All</option>
-                <option value="foods&drinks">Foods & drinks</option>
-                <option value="electronics">Electronics</option>
-                <option value="beauty&cosmetics">Beauty & cosmetics</option>
+                <option value="All">All</option>
+                <option value="Food & drinks">Food & drinks</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Beauty & cosmetics">Beauty & cosmetics</option>
+                <option value="Kitchen">Kitchen</option>
+                <option value="Clothings">Clothings</option>
+                <option value="Smartphones">Smartphones</option>
               </select>
             </form>
 
@@ -66,15 +113,20 @@ export default function Products() {
           </div>
 
           <hr />
+          <p className="p-1">{resultMessage.message}</p>
           <div className="products-list ">
             <Link to={`${url}/add`} className="add-new-product-btn product">
               <IoMdAdd className="add-icon mb-4" />
               <h4>Add a new product</h4>
             </Link>
-            {products &&
-              products.map((product) => (
-                <ProductAdmin {...product} key={product._id} />
-              ))}
+            {!isEmptyArray(filterResults)
+              ? filterResults.map((result) => (
+                  <ProductAdmin {...result} key={result._id} />
+                ))
+              : products &&
+                products.map((product) => (
+                  <ProductAdmin {...product} key={product._id} />
+                ))}
           </div>
         </div>
       </Route>
@@ -83,3 +135,5 @@ export default function Products() {
     </Switch>
   );
 }
+
+const isEmptyArray = (arr) => arr.length === 0;
