@@ -6,6 +6,7 @@ import EditProduct from "./EditProduct";
 import { IoMdAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "redux/actions/productActions";
+import { MdRefresh } from "react-icons/md";
 
 export default function Products() {
   const dispatch = useDispatch();
@@ -15,12 +16,16 @@ export default function Products() {
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
+
+  const refreshFetchedProducts = () => {
+    dispatch(getAllProducts());
+  };
   return (
     <Switch>
       <Route path={`${url}/`} exact>
         <div className="display products p-3">
           <div className="row align-items-center">
-            <div className="col-4">
+            <div className="col-3">
               <h2 className="page-title">Products (10)</h2>
             </div>
 
@@ -49,6 +54,15 @@ export default function Products() {
                 <option value="beauty&cosmetics">Beauty & cosmetics</option>
               </select>
             </form>
+
+            <div className="col-1">
+              <button
+                className="refresh-button"
+                onClick={refreshFetchedProducts}
+              >
+                <MdRefresh />
+              </button>
+            </div>
           </div>
 
           <hr />

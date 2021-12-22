@@ -6,6 +6,17 @@
         @include page-title;
         margin: 0;
       }
+      .refresh-button {
+        border-radius: 50%;
+        background-color: transparent;
+        border: none;
+        padding: 10px;
+        font-size: 1.5rem;
+
+        svg {
+          color: $textColorHeading;
+        }
+      }
     }
     > form {
       color: $textColorGrey;
@@ -13,6 +24,7 @@
       font-size: 1.1rem;
     }
   }
+
   hr {
     // margin: 5px 0 20px 0;
   }
