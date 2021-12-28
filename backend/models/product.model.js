@@ -1,14 +1,6 @@
 const mongoose = require("mongoose");
 
-const categoriesList = [
-  "Uncategorized",
-  "Food & drinks",
-  "Electronics",
-  "Beauty & cosmetics",
-  "Kitchen",
-  "Clothings",
-  "Smartphones",
-];
+const categoriesList = require("../utils/categories");
 
 const productSchema = mongoose.Schema({
   name: { type: String },

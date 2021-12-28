@@ -6,15 +6,18 @@ import "styles/Homepage.scss";
 import categoryImage1 from "assets/gummy-coffee 1.svg";
 import RoleRestrict from "components/RoleRestrict";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "redux/actions/productActions";
+import { getAllCategories, getAllProducts } from "redux/actions/productActions";
 import { isEmptyArray } from "utils/helpers";
 export default function Homepage() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
+    dispatch(getAllCategories());
   }, []);
 
-  const { products, isFetched } = useSelector((state) => state.product);
+  const { products, isFetched, categories } = useSelector(
+    (state) => state.product
+  );
   return (
     <RoleRestrict onlyFor={["C"]}>
       <div className="homepage">
@@ -58,14 +61,10 @@ export default function Homepage() {
         <div className="page-3">
           <h2 className="page-title">Browse by category</h2>
           <div className="categories">
-            <CategoryItem />
-            <CategoryItem />
-            <CategoryItem />
-            <CategoryItem />
-            <CategoryItem />
-            <CategoryItem />
-            <CategoryItem />
-            <CategoryItem />
+            {categories &&
+              categories.map((category, i) => (
+                <CategoryItem category={category} key={i} />
+              ))}
           </div>
         </div>
       </div>
@@ -73,13 +72,13 @@ export default function Homepage() {
   );
 }
 
-const CategoryItem = () => {
+const CategoryItem = ({ category }) => {
   return (
     <div className="category-item">
       <div className="img-cont">
         <img src={categoryImage1} alt="" />
       </div>
-      <h5 className="category-name text-center p-4">Food & drinks</h5>
+      <h5 className="category-name text-center p-4">{category}</h5>
     </div>
   );
 };

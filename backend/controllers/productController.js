@@ -60,3 +60,20 @@ module.exports.getAllProducts = async (req, res) => {
       .status(500);
   }
 };
+
+module.exports.getAllCategories = async (req, res) => {
+  try {
+    const categoriesList = await require("../utils/categories");
+    res.send({
+      success: true,
+      message: "Categories fetched successfully.",
+      details: categoriesList,
+    });
+  } catch (error) {
+    await res.send({
+      success: false,
+      message: error.message,
+      details: error,
+    });
+  }
+};

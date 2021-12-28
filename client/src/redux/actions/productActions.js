@@ -1,5 +1,7 @@
 import axios from "axios";
 import {
+  CATEGORIES_FETCH_FAIL,
+  CATEGORIES_FETCH_SUCCESS,
   ERROR,
   GET_ALL_PRODUCTS_FAIL,
   GET_ALL_PRODUCTS_SUCCESS,
@@ -71,6 +73,31 @@ export const sendProductAddRequest = (product) => {
       });
       dispatch({
         type: PRODUCT_CREATE_FAIL,
+      });
+    }
+  };
+};
+
+export const getAllCategories = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get("/product/categories");
+
+      if (data.success) {
+        return dispatch({
+          type: CATEGORIES_FETCH_SUCCESS,
+          payload: data.details,
+        });
+      }
+
+      dispatch({
+        type: CATEGORIES_FETCH_FAIL,
+        payload: data.details,
+      });
+    } catch (error) {
+      dispatch({
+        type: CATEGORIES_FETCH_FAIL,
+        payload: error?.response?.data?.details,
       });
     }
   };
