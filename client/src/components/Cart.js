@@ -1,6 +1,6 @@
 import React from "react";
 import "styles/Cart.scss";
-import placeholderImage from "assets/phone.jfif";
+import fallbackImage from "assets/shopy_fallback.svg";
 import { useSelector } from "react-redux";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import clsx from "clsx";
@@ -28,29 +28,12 @@ export default function Cart() {
 
       <div className="cart-items">
         <CartItem
-          placeholderImage={placeholderImage}
+          fallbackImage={fallbackImage}
           name="OnePlus Nord"
           rate={25}
           quantity={3}
         />
-        <CartItem
-          placeholderImage={placeholderImage}
-          name="OnePlus Nord"
-          rate={25}
-          quantity={3}
-        />
-        <CartItem
-          placeholderImage={placeholderImage}
-          name="OnePlus Nord"
-          rate={25}
-          quantity={3}
-        />
-        <CartItem
-          placeholderImage={placeholderImage}
-          name="OnePlus Nord"
-          rate={25}
-          quantity={3}
-        />
+
         <button className="btn btn-sm btn-outline-secondary show-all-btn mx-auto mt-2 w-100 py-1">
           Show all cart items
         </button>
@@ -77,11 +60,11 @@ export default function Cart() {
   );
 }
 
-const CartItem = ({ placeholderImage, name, rate, quantity, price }) => {
+const CartItem = ({ fallbackImage, name, rate, quantity, price }) => {
   return (
     <div className="item row p-3 border-bottom">
       <div className="col-2 placeholder-img">
-        <img src={placeholderImage} alt="" className="cart-placeholder-img" />
+        <img src={fallbackImage} alt="" className="cart-placeholder-img" />
       </div>
       <div className="col product-detail">
         <div className="product-name">OnePlus Nord</div>

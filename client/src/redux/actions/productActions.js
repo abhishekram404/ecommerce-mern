@@ -12,10 +12,12 @@ export const getAllProducts = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("/product");
+      console.log(data);
       if (data.success) {
         return dispatch({
           type: GET_ALL_PRODUCTS_SUCCESS,
           payload: data.details,
+          isFetched: data.success,
         });
       }
       dispatch({
@@ -24,10 +26,12 @@ export const getAllProducts = () => {
       });
       dispatch({
         type: GET_ALL_PRODUCTS_FAIL,
+        isFetched: data.success,
       });
     } catch (error) {
       dispatch({
         type: GET_ALL_PRODUCTS_FAIL,
+        isFetched: error?.response?.data.success,
       });
       dispatch({
         type: ERROR,

@@ -30,6 +30,7 @@ mongoose.connect(
   process.env.MONGO_URI || "mongodb://localhost:27017/ecommerce",
   (err) => {
     if (err) {
+      console.log(err);
       console.log("❌ Error connecting to DB  ");
     }
     console.log("✅ Connected to DB  ");

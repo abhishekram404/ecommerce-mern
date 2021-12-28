@@ -1,6 +1,7 @@
 import React from "react";
 import "styles/Product.scss";
-import placeholderImage from "assets/phone.jfif";
+import fallbackImage from "assets/shopy_fallback.svg";
+
 import { Link, useRouteMatch } from "react-router-dom";
 export default function ProductAdmin(props) {
   const { url } = useRouteMatch();
@@ -8,11 +9,16 @@ export default function ProductAdmin(props) {
     <div className="product">
       <div className="row img-row">
         <div className="img-cont">
-          <img src={props?.productImages[0] ?? placeholderImage} alt="" />
+          <img src={props?.productImages[0] ?? fallbackImage} alt="" />
         </div>
       </div>
       <div className="row detail-row align-items-center">
-        <div className="product-name col-9">{props.name}</div>
+        <div className="product-name col-9">
+          {" "}
+          {props.name.length > 25
+            ? props.name.slice(0, 25) + "..."
+            : props.name}
+        </div>
         <div className="product-price col-3 text-end">${props.price}</div>
       </div>
       <div className="row stock-row">

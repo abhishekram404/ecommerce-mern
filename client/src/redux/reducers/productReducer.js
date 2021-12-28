@@ -5,14 +5,21 @@ import {
   PRODUCT_CREATE_SUCCESS,
 } from "redux/constants";
 
-export const productReducer = (state = {}, action) => {
+export const productReducer = (
+  state = { products: [], isFetched: null },
+  action
+) => {
   switch (action.type) {
     case GET_ALL_PRODUCTS_SUCCESS:
       return {
         products: action.payload,
+        isFetched: action.isFetched,
       };
     case GET_ALL_PRODUCTS_FAIL:
-      return state;
+      return {
+        ...state,
+        isFetched: action.isFetched,
+      };
     case PRODUCT_CREATE_SUCCESS:
       return state;
     case PRODUCT_CREATE_FAIL:

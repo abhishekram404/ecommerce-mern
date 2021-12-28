@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "redux/actions/productActions";
 import { MdRefresh } from "react-icons/md";
 import { debounce } from "lodash";
+import { isEmptyArray } from "utils/helpers.js";
 export default function Products() {
   const dispatch = useDispatch();
   const { url } = useRouteMatch();
@@ -68,7 +69,9 @@ export default function Products() {
         <div className="display products p-3">
           <div className="row align-items-center">
             <div className="col-3">
-              <h2 className="page-title">Products (10)</h2>
+              <h2 className="page-title">
+                Products ({products && products.length})
+              </h2>
             </div>
 
             <form className="col-4 d-flex align-items-center">
@@ -106,6 +109,7 @@ export default function Products() {
               <button
                 className="refresh-button"
                 onClick={refreshFetchedProducts}
+                title="Refresh products"
               >
                 <MdRefresh />
               </button>
@@ -123,7 +127,7 @@ export default function Products() {
               ? filterResults.map((result) => (
                   <ProductAdmin {...result} key={result._id} />
                 ))
-              : products &&
+              : !isEmptyArray(products) &&
                 products.map((product) => (
                   <ProductAdmin {...product} key={product._id} />
                 ))}
@@ -135,5 +139,3 @@ export default function Products() {
     </Switch>
   );
 }
-
-const isEmptyArray = (arr) => arr.length === 0;
