@@ -124,7 +124,7 @@ exports.login = async (req, res) => {
       secure: isProduction ? true : false,
       httpOnly: false,
       ...(isProduction && {
-        domain: "abhishekram404-blog.herokuapp.com",
+        domain: "abhishekram404-shopy.herokuapp.com",
         sameSite: "None",
       }),
     });
@@ -133,7 +133,7 @@ exports.login = async (req, res) => {
       secure: isProduction ? true : false,
       httpOnly: true,
       ...(isProduction && {
-        domain: "abhishekram404-blog.herokuapp.com",
+        domain: "abhishekram404-shopy.herokuapp.com",
         sameSite: "None",
       }),
     });
