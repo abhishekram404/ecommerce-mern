@@ -5,11 +5,6 @@ const bcrpyt = require("bcrypt");
 const capitalize = require("capitalize");
 const jwt = require("jsonwebtoken");
 
-exports.all = async (req, res) => {
-  console.log(req.session);
-  res.send(req.session);
-};
-
 exports.register = async (req, res) => {
   try {
     const { error } = await registerValidate(req.body);
