@@ -57,7 +57,7 @@ mongoose.connect(
 if (isProduction) {
   app.use(express.static(path.join(__dirname, "client", "build")));
   app.get("*", async (req, res) => {
-    await res.sendFile("index.html");
+    await res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
 }
 
