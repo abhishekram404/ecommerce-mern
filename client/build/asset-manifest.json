@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.533da095.chunk.css",
+    "main.js": "/static/js/main.8106ef42.chunk.js",
+    "main.js.map": "/static/js/main.8106ef42.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.6386204d.js",
+    "runtime-main.js.map": "/static/js/runtime-main.6386204d.js.map",
+    "static/css/2.2c0ddb65.chunk.css": "/static/css/2.2c0ddb65.chunk.css",
+    "static/js/2.21bfcf8b.chunk.js": "/static/js/2.21bfcf8b.chunk.js",
+    "static/js/2.21bfcf8b.chunk.js.map": "/static/js/2.21bfcf8b.chunk.js.map",
+    "static/js/3.fa2da313.chunk.js": "/static/js/3.fa2da313.chunk.js",
+    "static/js/3.fa2da313.chunk.js.map": "/static/js/3.fa2da313.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.2c0ddb65.chunk.css.map": "/static/css/2.2c0ddb65.chunk.css.map",
+    "static/css/main.533da095.chunk.css.map": "/static/css/main.533da095.chunk.css.map",
+    "static/js/2.21bfcf8b.chunk.js.LICENSE.txt": "/static/js/2.21bfcf8b.chunk.js.LICENSE.txt",
+    "static/media/cart-logo-white.07bf9a70.svg": "/static/media/cart-logo-white.07bf9a70.svg",
+    "static/media/gummy-coffee 1.708c94f5.svg": "/static/media/gummy-coffee 1.708c94f5.svg",
+    "static/media/login-svg.699f28a3.svg": "/static/media/login-svg.699f28a3.svg",
+    "static/media/shopy_fallback.a3b0051c.svg": "/static/media/shopy_fallback.a3b0051c.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6386204d.js",
+    "static/css/2.2c0ddb65.chunk.css",
+    "static/js/2.21bfcf8b.chunk.js",
+    "static/css/main.533da095.chunk.css",
+    "static/js/main.8106ef42.chunk.js"
+  ]
+}
