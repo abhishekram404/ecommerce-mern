@@ -12,10 +12,26 @@ const cookieParser = require("cookie-parser");
 dotenv.config();
 app.use(cookieParser());
 
+const isProduction = process.env.NODE_ENV === "production";
+
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    isProduction
+      ? "https://abhishekram404-shopy.herokuapp.com"
+      : "http://localhost:3000"
+  );
+  res.header("Access-Control-Allow-Credentials", true);
+
+  next();
+});
+
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: isProduction
+      ? "https://abhishekram404-blog.herokuapp.com"
+      : "http://localhost:3000",
   })
 );
 app.use(
@@ -26,7 +42,6 @@ app.use(
 app.use(bodyParser.json());
 
 mongoose.connect(
-  // process.env.NODE_ENV === 'production'? "":
   process.env.MONGO_URI || "mongodb://localhost:27017/ecommerce",
   (err) => {
     if (err) {
@@ -39,11 +54,10 @@ mongoose.connect(
     useNewUrlParser: true,
   }
 );
-// serve the build folder in  production environment
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../build")));
+if (isProduction) {
+  app.use(express.static(path.join(__dirname, "..", "client", "build")));
   app.get("*", async (req, res) => {
-    res.sendFile("index.html");
+    await res.sendFile("index.html");
   });
 }
 

@@ -38,7 +38,6 @@ export default function EditProduct(props) {
       { productImages: uploadImages },
       { tags: tagsArray }
     );
-    console.log(newObj);
     if (props.mode === "add") {
       dispatch(sendProductAddRequest(newObj));
     }

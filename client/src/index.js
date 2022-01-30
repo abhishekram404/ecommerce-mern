@@ -8,7 +8,12 @@ import store from "redux/store";
 import axios from "axios";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
-axios.defaults.baseURL = "http://localhost:3001/api";
+
+const isProduction = process.env.REACT_APP_NODE_ENV === "production";
+
+axios.defaults.baseURL = isProduction
+  ? "https://abhishekram404-shopy.herokuapp.com/api/"
+  : "http://localhost:3001/api";
 axios.defaults.withCredentials = true;
 
 const options = {

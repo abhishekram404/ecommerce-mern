@@ -73,6 +73,7 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    const isProduction = process.env.NODE_ENV === "production";
     const { email, password, remember } = await req.body;
 
     let found = await Employee.findOne({ email: email.trim() }).select(
@@ -84,8 +85,6 @@ exports.login = async (req, res) => {
         "+password"
       );
     }
-
-    // console.log(found);
 
     if (!found) {
       return res.status(400).send({
@@ -117,19 +116,31 @@ exports.login = async (req, res) => {
     );
     res.cookie("r", role?.[0] || "C", {
       maxAge: 1000 * 60 * 60 * 48,
-      secure: false,
+      secure: isProduction ? true : false,
       httpOnly: false,
+      ...(isProduction && {
+        domain: "abhishekram404-shopy.herokuapp.com",
+        sameSite: "None",
+      }),
     });
 
     res.cookie("isUserLoggedIn", true, {
       maxAge: 1000 * 60 * 60 * 48,
-      secure: false,
+      secure: isProduction ? true : false,
       httpOnly: false,
+      ...(isProduction && {
+        domain: "abhishekram404-blog.herokuapp.com",
+        sameSite: "None",
+      }),
     });
     res.cookie("jwt", token, {
       maxAge: 1000 * 60 * 60 * 48,
-      secure: false,
+      secure: isProduction ? true : false,
       httpOnly: true,
+      ...(isProduction && {
+        domain: "abhishekram404-blog.herokuapp.com",
+        sameSite: "None",
+      }),
     });
 
     return res.status(200).send({

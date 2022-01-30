@@ -66,7 +66,6 @@ function App() {
           className="body"
           onScroll={() => {
             dispatch(collapse_cart());
-            console.log("Scrolling");
           }}
         >
           <Cart />

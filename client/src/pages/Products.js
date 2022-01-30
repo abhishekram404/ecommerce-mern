@@ -50,10 +50,7 @@ export default function Products() {
       noOfResult: undefined,
       message: "",
     });
-    console.log(category);
-    console.log(products);
     let r = products.filter((product) => product.category.includes(category));
-    console.log(r);
     setFilterResults(r);
     setResultMessage({
       message: r.length

@@ -14,7 +14,6 @@ export const getAllProducts = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("/product");
-      console.log(data);
       if (data.success) {
         return dispatch({
           type: GET_ALL_PRODUCTS_SUCCESS,

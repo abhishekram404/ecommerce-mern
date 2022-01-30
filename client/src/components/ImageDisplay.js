@@ -18,7 +18,6 @@ export default function ImageDisplay({ fileProp, upload }) {
       if (images.length > 8) {
         return alert("Can't upload more than 8 product images. ");
       }
-      console.log(inputFile);
 
       // await Array.from(inputFiles).forEach(async (inputFile, index) => {
       setUploading(true);
@@ -37,7 +36,6 @@ export default function ImageDisplay({ fileProp, upload }) {
       const { data } = await uploadedImage;
 
       await setImages([...images, await data.secure_url]);
-      console.log(data);
       setUploading(false);
       // });
     } catch (error) {
