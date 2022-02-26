@@ -54,15 +54,14 @@ mongoose.connect(
     useNewUrlParser: true,
   }
 );
+app.use("/api/user", userRoutes);
+app.use("/api/product", productRoutes);
 if (isProduction) {
   app.use(express.static(path.join(__dirname, "client", "build")));
   app.get("*", async (req, res) => {
     await res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
 }
-
-app.use("/api/user", userRoutes);
-app.use("/api/product", productRoutes);
 
 app.listen(port, () => {
   console.log(`🎧  Listening on port ${port}`);

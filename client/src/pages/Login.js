@@ -4,12 +4,17 @@ import FormTemplate from "../components/FormTemplate";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { useDispatch, useSelector } from "react-redux";
-import { login_user } from "redux/actions/userActions";
+import { useDispatch } from "react-redux";
+import { useMutation } from "react-query";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { ERROR, SUCCESS } from "redux/constants";
 function Login() {
   const history = useHistory();
-  const { isUserLoggedIn } = useSelector((state) => state.user);
-
+  const isUserLoggedIn =
+    sessionStorage.getItem("isUserLoggedIn") === "true" ||
+    Cookies.get("isUserLoggedIn") === "true";
+  console.log(isUserLoggedIn);
   useEffect(() => {
     if (isUserLoggedIn) {
       history.push("/");
@@ -31,8 +36,24 @@ function Login() {
     remember: Yup.boolean().oneOf([true, false], null),
   });
 
+  const { mutate, isLoading } = useMutation(
+    (data) => axios.post("/user/login", data),
+    {
+      onSuccess: ({ data }) => {
+        console.log(data);
+        sessionStorage.setItem("isUserLoggedIn", true);
+        dispatch({ type: SUCCESS, payload: data.message });
+      },
+      onError: (error) => {
+        console.log(error?.response?.data?.message);
+        sessionStorage.removeItem("isUserLoggedIn");
+        dispatch({ type: ERROR, payload: error?.response?.data?.message });
+      },
+    }
+  );
+
   const onSubmit = (values) => {
-    dispatch(login_user(values));
+    mutate(values);
   };
 
   return (
@@ -98,8 +119,10 @@ function Login() {
                   "btn submit-btn",
                   Object.keys(props.errors).length >= 1 && "disabled"
                 )}
-                value="Login"
-                disabled={Object.keys(props.errors).length >= 1 && true}
+                value={isLoading ? "Logging in" : "Login"}
+                disabled={
+                  isLoading || (Object.keys(props.errors).length >= 1 && true)
+                }
               />
             </div>
           </Form>

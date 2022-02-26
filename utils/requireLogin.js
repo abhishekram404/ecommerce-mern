@@ -2,7 +2,9 @@ const jwt = require("jsonwebtoken");
 const requireLogin = async (req, res, next) => {
   try {
     const { jwt: token } = await req.cookies;
+    console.log(token);
     const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decodedToken, typeof decodedToken);
 
     if (isEmptyObject(decodedToken)) {
       return res.status(500).send({

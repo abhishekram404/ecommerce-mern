@@ -4,8 +4,10 @@ import FormTemplate from "../components/FormTemplate";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { register_user } from "redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { ERROR, SUCCESS } from "redux/constants";
 function Register() {
   const { isUserLoggedIn } = useSelector((state) => state.user);
   const history = useHistory();
@@ -42,8 +44,24 @@ function Register() {
       .required("You must agree to the terms & conditions."),
   });
 
+  let { isLoading, mutate } = useMutation(
+    (values) => axios.post("/user/register", values),
+    {
+      onError: (error) => {
+        isLoading = false;
+        console.log(error.response.data);
+        dispatch({ type: ERROR, payload: error?.response?.data.message });
+      },
+      onSuccess: ({ data }) => {
+        isLoading = false;
+        console.log(data);
+        dispatch({ type: SUCCESS, payload: data.message });
+      },
+    }
+  );
+
   const onSubmit = (values) => {
-    dispatch(register_user(values));
+    mutate(values);
   };
 
   return (
@@ -153,11 +171,12 @@ function Register() {
                     !props.values.agreed &&
                     "disabled"
                 )}
-                value="Register my account"
+                value={isLoading ? "Registering" : "Register my account"}
                 disabled={
-                  Object.keys(props.errors).length >= 1 &&
-                  !props.values.agreed &&
-                  true
+                  isLoading ||
+                  (Object.keys(props.errors).length >= 1 &&
+                    !props.values.agreed &&
+                    true)
                 }
               />
             </div>
