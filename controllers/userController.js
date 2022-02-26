@@ -155,18 +155,60 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    res.clearCookie("r");
-    res.clearCookie("isUserLoggedIn");
-    res.clearCookie("jwt");
+    res.clearCookie("r", {
+      secure: isProduction ? true : false,
+      httpOnly: false,
+      ...(isProduction && {
+        domain: "abhishekram404-shopy.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
+    res.clearCookie("isUserLoggedIn", {
+      secure: isProduction ? true : false,
+      httpOnly: false,
+      ...(isProduction && {
+        domain: "abhishekram404-shopy.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
+    res.clearCookie("jwt", {
+      secure: isProduction ? true : false,
+      httpOnly: true,
+      ...(isProduction && {
+        domain: "abhishekram404-shopy.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
     res.status(200).send({
       success: true,
       data: null,
       message: "Logged out",
     });
   } catch (error) {
-    res.clearCookie("r");
-    res.clearCookie("isUserLoggedIn");
-    res.clearCookie("jwt");
+    res.clearCookie("r", {
+      secure: isProduction ? true : false,
+      httpOnly: false,
+      ...(isProduction && {
+        domain: "abhishekram404-shopy.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
+    res.clearCookie("isUserLoggedIn", {
+      secure: isProduction ? true : false,
+      httpOnly: false,
+      ...(isProduction && {
+        domain: "abhishekram404-shopy.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
+    res.clearCookie("jwt", {
+      secure: isProduction ? true : false,
+      httpOnly: true,
+      ...(isProduction && {
+        domain: "abhishekram404-shopy.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
     res.status(200).send({
       success: true,
       data: null,
