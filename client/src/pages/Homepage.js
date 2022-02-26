@@ -1,12 +1,11 @@
 import ProductCustomer, {
   ProductCustomerSkeleton,
 } from "components/ProductCustomer";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "styles/Homepage.scss";
 import categoryImage1 from "assets/gummy-coffee 1.svg";
 import RoleRestrict from "components/RoleRestrict";
 import { useDispatch } from "react-redux";
-import { getAllCategories } from "redux/actions/productActions";
 import { isEmptyArray } from "utils/helpers";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -14,12 +13,8 @@ import AppContext from "utils/AppContext";
 import { ERROR } from "redux/constants";
 export default function Homepage() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllCategories());
-  }, []);
 
   const { isUserLoggedIn, categories } = useContext(AppContext);
-  console.log(categories);
   let {
     data: products,
     isLoading,
@@ -58,12 +53,12 @@ export default function Homepage() {
           </button>
         </div>
 
-        {/* <div className="page-2">
+        <div className="page-2">
           <h2 className="page-title">Exciting offers</h2>
           <div className="products-list">
-            {isFetched && isEmptyArray(products) ? (
+            {(isSuccess && isEmptyArray(products)) || isError ? (
               <h4>Nothing here</h4>
-            ) : isFetched === null ? (
+            ) : isLoading ? (
               [1, 2, 3, 4, 5, 6, 7, 8].map((a, i) => (
                 <ProductCustomerSkeleton key={i} />
               ))
@@ -73,7 +68,7 @@ export default function Homepage() {
               ))
             )}
           </div>
-        </div> */}
+        </div>
 
         <div className="page-3">
           <h2 className="page-title">Browse by category</h2>

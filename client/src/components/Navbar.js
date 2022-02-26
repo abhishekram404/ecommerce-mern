@@ -18,8 +18,6 @@ export default function Navbar() {
 
   const r = Cookies.get("r") || "C";
 
-  console.log(r);
-
   const { mutate: logoutMutation } = useMutation(
     () => axios.get("/user/logout"),
     {
