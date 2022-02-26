@@ -1,32 +1,49 @@
 import ProductCustomer, {
   ProductCustomerSkeleton,
 } from "components/ProductCustomer";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "styles/Homepage.scss";
 import categoryImage1 from "assets/gummy-coffee 1.svg";
 import RoleRestrict from "components/RoleRestrict";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategories, getAllProducts } from "redux/actions/productActions";
+import { getAllCategories } from "redux/actions/productActions";
 import { isEmptyArray } from "utils/helpers";
+import { useQuery } from "react-query";
+import axios from "axios";
+import LoginContext from "utils/LoginContext";
+import { ERROR } from "redux/constants";
 export default function Homepage() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllProducts());
     dispatch(getAllCategories());
   }, []);
 
-  const { products, isFetched, categories } = useSelector(
-    (state) => state.product
-  );
+  const { isUserLoggedIn } = useContext(LoginContext);
+  let {
+    data: products,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useQuery("products", () => axios.get("/product"), {
+    enabled: !isUserLoggedIn,
+    onError: (error) => {
+      dispatch({ type: ERROR, payload: error?.response?.data?.message });
+    },
+  });
+  if (isSuccess) {
+    products = products.data.details;
+  }
+
+  const { categories } = useSelector((state) => state.product);
   return (
     <RoleRestrict onlyFor={["C"]}>
       <div className="homepage">
         <div className="page-1">
           <h2 className="page-title">Our featured products</h2>
           <div className="products-list">
-            {isFetched && isEmptyArray(products) ? (
+            {(isSuccess && isEmptyArray(products)) || isError ? (
               <h4>Nothing here</h4>
-            ) : isFetched === null ? (
+            ) : isLoading ? (
               [1, 2, 3, 4, 5, 6, 7, 8].map((a, i) => (
                 <ProductCustomerSkeleton key={i} />
               ))
@@ -41,7 +58,7 @@ export default function Homepage() {
           </button>
         </div>
 
-        <div className="page-2">
+        {/* <div className="page-2">
           <h2 className="page-title">Exciting offers</h2>
           <div className="products-list">
             {isFetched && isEmptyArray(products) ? (
@@ -56,7 +73,7 @@ export default function Homepage() {
               ))
             )}
           </div>
-        </div>
+        </div> */}
 
         <div className="page-3">
           <h2 className="page-title">Browse by category</h2>
