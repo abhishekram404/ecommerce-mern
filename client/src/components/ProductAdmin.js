@@ -4,6 +4,7 @@ import fallbackImage from "assets/shopy_fallback.svg";
 
 import { Link, useRouteMatch } from "react-router-dom";
 export default function ProductAdmin(props) {
+  console.log(props);
   const { url } = useRouteMatch();
   return (
     <div className="product">
@@ -31,7 +32,7 @@ export default function ProductAdmin(props) {
       </div>
       <div className="row buttons-row mt-2">
         <div className="col">
-          <Link to={`${url}/edit/2`} className="edit-btn btn w-100">
+          <Link to={`${url}/edit/${props._id}`} className="edit-btn btn w-100">
             Edit product
           </Link>
         </div>

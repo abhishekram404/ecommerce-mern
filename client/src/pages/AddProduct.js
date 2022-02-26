@@ -4,10 +4,10 @@ import "styles/EditProduct.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { sendProductAddRequest } from "redux/actions/productActions";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { ERROR, SUCCESS } from "redux/constants";
+import { useParams, useRouteMatch } from "react-router-dom";
 export default function AddProduct(props) {
   const dispatch = useDispatch();
   const [uploadImages, setUploadImages] = useState([]);
@@ -59,6 +59,8 @@ export default function AddProduct(props) {
       },
     }
   );
+
+  // let {} = useQuery('editProduct', ()=> {})
 
   return (
     <Formik
