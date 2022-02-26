@@ -79,7 +79,8 @@ export const logout_user = () => {
 export const check_login = () => {
   return async (dispatch) => {
     try {
-      const isUserLoggedIn = await Cookies.get("isUserLoggedIn");
+      const isUserLoggedIn = (await Cookies.get("isUserLoggedIn")) === "true";
+      console.log(isUserLoggedIn);
       if (isUserLoggedIn) {
         dispatch({ type: SUCCESS, payload: "Login successful" });
         dispatch({ type: LOGIN_SUCCESS, payload: null });

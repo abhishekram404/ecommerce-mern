@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Navbar from "components/Navbar";
 import "./App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -17,12 +17,19 @@ import { useEffect } from "react";
 import { CLEAR } from "redux/constants";
 import { check_login } from "redux/actions/userActions";
 import ProtectedRoute from "components/ProtectedRoute";
+import LoginContext from "utils/LoginContext";
+import Cookies from "js-cookie";
 function App() {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { cartExpanded } = useSelector((state) => state.common);
   const { type, message } = useSelector((state) => state.alert);
 
+  const isUserLoggedIn =
+    sessionStorage.getItem("isUserLoggedIn") === "true" ||
+    Cookies.get("isUserLoggedIn") === "true";
+
+  console.log(isUserLoggedIn);
   const isFirstRun = useRef(true);
   useEffect(() => {
     if (isFirstRun.current) {
@@ -54,36 +61,34 @@ function App() {
     }
   }, [type, message]);
 
-  useEffect(() => {
-    dispatch(check_login());
-  }, []);
-
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Navbar />
-        <div
-          className="body"
-          onScroll={() => {
-            dispatch(collapse_cart());
-          }}
-        >
-          <Cart />
-          {cartExpanded && <div className="backdrop"></div>}
+    <LoginContext.Provider value={{ isUserLoggedIn }}>
+      <div className="App">
+        <BrowserRouter>
+          <Navbar />
+          <div
+            className="body"
+            onScroll={() => {
+              dispatch(collapse_cart());
+            }}
+          >
+            <Cart />
+            {cartExpanded && <div className="backdrop"></div>}
 
-          <Switch>
-            <Route path="/" exact component={Homepage} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <ProtectedRoute path="/admin" component={Admin} />
-            <Route path="*">
-              <h1>Error 404! Page Not found </h1>;
-            </Route>
-          </Switch>
-        </div>
-        <Footer />
-      </BrowserRouter>
-    </div>
+            <Switch>
+              <Route path="/" exact component={Homepage} />
+              <Route path="/register" component={Register} />
+              <Route path="/login" component={Login} />
+              <ProtectedRoute path="/admin" component={Admin} />
+              <Route path="*">
+                <h1>Error 404! Page Not found </h1>;
+              </Route>
+            </Switch>
+          </div>
+          <Footer />
+        </BrowserRouter>
+      </div>
+    </LoginContext.Provider>
   );
 }
 

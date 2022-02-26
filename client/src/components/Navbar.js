@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "styles/Navbar.scss";
 import cartIcon from "assets/cart-logo-white.svg";
@@ -10,14 +10,12 @@ import Cookies from "js-cookie";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { ERROR, SUCCESS } from "redux/constants";
+import LoginContext from "utils/LoginContext";
 export default function Navbar() {
   const dispatch = useDispatch();
 
-  const isUserLoggedIn =
-    sessionStorage.getItem("isUserLoggedIn") === "true" ||
-    Cookies.get("isUserLoggedIn") === "true";
+  const { isUserLoggedIn } = useContext(LoginContext);
 
-  console.log(isUserLoggedIn);
   const r = useSelector((state) => state.user.r) || Cookies.get("r");
 
   console.log(r);

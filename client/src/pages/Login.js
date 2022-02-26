@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import FormTemplate from "../components/FormTemplate";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -9,12 +9,10 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { ERROR, SUCCESS } from "redux/constants";
+import LoginContext from "utils/LoginContext";
 function Login() {
   const history = useHistory();
-  const isUserLoggedIn =
-    sessionStorage.getItem("isUserLoggedIn") === "true" ||
-    Cookies.get("isUserLoggedIn") === "true";
-  console.log(isUserLoggedIn);
+  const { isUserLoggedIn } = useContext(LoginContext);
   useEffect(() => {
     if (isUserLoggedIn) {
       history.push("/");

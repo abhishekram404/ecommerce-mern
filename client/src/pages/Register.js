@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import FormTemplate from "../components/FormTemplate";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { ERROR, SUCCESS } from "redux/constants";
+import LoginContext from "utils/LoginContext";
 function Register() {
-  const { isUserLoggedIn } = useSelector((state) => state.user);
+  const { isUserLoggedIn } = useContext(LoginContext);
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
