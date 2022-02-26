@@ -30,7 +30,7 @@ app.use(
   cors({
     credentials: true,
     origin: isProduction
-      ? "https://abhishekram404-blog.herokuapp.com"
+      ? "https://abhishekram404-shopy.herokuapp.com"
       : "http://localhost:3000",
   })
 );
