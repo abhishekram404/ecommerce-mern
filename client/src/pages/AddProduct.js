@@ -1,30 +1,32 @@
 import React, { useState } from "react";
 import ImageDisplay from "components/ImageDisplay";
-// import { useParams } from "react-router";
 import "styles/EditProduct.scss";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { sendProductAddRequest } from "redux/actions/productActions";
-export default function EditProduct(props) {
+import { useMutation } from "react-query";
+import axios from "axios";
+import { ERROR, SUCCESS } from "redux/constants";
+export default function AddProduct(props) {
   const dispatch = useDispatch();
   const [uploadImages, setUploadImages] = useState([]);
   const initialValues = {
     name: "",
-    price: 0,
+    price: "",
     category: "Uncategorized",
-    stock: 0,
+    stock: "",
     tags: "",
     description: "",
     productImages: [],
   };
 
   const validationSchema = Yup.object({
-    name: Yup.string(),
-    price: Yup.number(),
-    category: Yup.string(),
-    stock: Yup.number(),
-    tags: Yup.string(),
+    name: Yup.string().required("Product name is required."),
+    price: Yup.number().required("Price is required."),
+    category: Yup.string().required("Price is required."),
+    stock: Yup.number().required("Stock number is required."),
+    tags: Yup.string().required("At least one tag is required."),
     description: Yup.string(),
     productImages: Yup.array(),
   });
@@ -39,9 +41,24 @@ export default function EditProduct(props) {
       { tags: tagsArray }
     );
     if (props.mode === "add") {
-      dispatch(sendProductAddRequest(newObj));
+      addProductMutation(newObj);
     }
   };
+
+  let { mutate: addProductMutation, isLoading } = useMutation(
+    (data) =>
+      axios.post("/product/create", data, {
+        withCredentials: true,
+      }),
+    {
+      onSuccess: ({ data }) => {
+        dispatch({ type: SUCCESS, payload: data.message });
+      },
+      onError: (error) => {
+        dispatch({ type: ERROR, payload: error?.response?.data?.message });
+      },
+    }
+  );
 
   return (
     <Formik
@@ -61,20 +78,27 @@ export default function EditProduct(props) {
                 <h3 className="page-title text-center">Product details</h3>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">
-                    Product Name
+                    Product Name <span className="text-danger">*</span>
                   </label>
                   <Field name="name" type="text" className="form-control" />
+                  <div className="error-message text-danger">
+                    <ErrorMessage name="name" />
+                  </div>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">
-                    Price <small>(per item)</small>
+                    Price <small>(per item)</small>{" "}
+                    <span className="text-danger">*</span>
                   </label>
                   <Field name="price" type="number" className="form-control" />
+                  <div className="error-message text-danger">
+                    <ErrorMessage name="price" />
+                  </div>
                 </div>
                 <div className="mb-3 row">
                   <div className="col">
                     <label htmlFor="name" className="form-label">
-                      Category
+                      Category<span className="text-danger">*</span>
                     </label>
 
                     <Field
@@ -93,22 +117,29 @@ export default function EditProduct(props) {
                       <option value="Clothings">Clothings</option>
                       <option value="Smartphones">Smartphones</option>
                     </Field>
+                    <div className="error-message text-danger">
+                      <ErrorMessage name="category" />
+                    </div>
                   </div>
                   <div className="col">
                     <label htmlFor="stock" className="form-label">
-                      Stock quantity
+                      Stock quantity <span className="text-danger">*</span>
                     </label>
                     <Field
                       name="stock"
                       type="number"
                       className="form-control"
                     />
+                    <div className="error-message text-danger">
+                      <ErrorMessage name="stock" />
+                    </div>
                   </div>
                 </div>
                 <div className="mb-3 row">
                   <div className="col">
                     <label htmlFor="tags" className="form-label">
-                      Tags <small>(comma separated)</small>
+                      Tags <small>(comma separated)</small>{" "}
+                      <span className="text-danger">*</span>
                     </label>
                     <Field
                       name="tags"
@@ -116,6 +147,9 @@ export default function EditProduct(props) {
                       className="form-control"
                       placeholder="eg. chilled, summer, relaxing"
                     />
+                    <div className="error-message text-danger">
+                      <ErrorMessage name="tags" />
+                    </div>
                   </div>
                   <div className="col"></div>
                 </div>
@@ -142,8 +176,15 @@ export default function EditProduct(props) {
                   <button
                     type="submit"
                     className="btn btn-lg submit-btn w-100 border"
+                    disabled={isLoading}
                   >
-                    {props.mode === "add" ? "Add product" : "Update product"}
+                    {props.mode === "add"
+                      ? isLoading
+                        ? "Adding product"
+                        : "Add product"
+                      : isLoading
+                      ? "Updating product"
+                      : "Update product"}
                   </button>
                 </div>
               </div>

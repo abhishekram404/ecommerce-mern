@@ -13,15 +13,8 @@ const productValidate = (data) => {
       .required("You must select a category for the product."),
     stock: Joi.number(),
     tags: Joi.array().items(Joi.string()),
-    description: Joi.string().max(600).trim(),
+    description: Joi.string().max(600).allow(null, "").trim(),
     productImages: Joi.array().items(Joi.string()),
-
-    // trags: Joi.boolean()
-    //   .valid(true)
-    //   .messages({
-    //     "any.only": "You must agree to Shopy terms and conditions.",
-    //   })
-    //   .required(),
   });
   return schema.validate(data);
 };

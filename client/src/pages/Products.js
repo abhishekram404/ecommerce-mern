@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import "styles/Products.scss";
 import ProductAdmin from "components/ProductAdmin";
 import { Route, Switch, useRouteMatch, Link } from "react-router-dom";
-import EditProduct from "./EditProduct";
+import AddProduct from "./AddProduct";
 import { IoMdAdd } from "react-icons/io";
 import { MdRefresh } from "react-icons/md";
 import { debounce } from "lodash";
@@ -132,8 +132,8 @@ export default function Products() {
           </div>
         </div>
       </Route>
-      <Route path={`${url}/edit/:id`} component={EditProduct} />
-      <Route path={`${url}/add`} component={() => <EditProduct mode="add" />} />
+      <Route path={`${url}/edit/:id`} component={AddProduct} />
+      <Route path={`${url}/add`} component={() => <AddProduct mode="add" />} />
     </Switch>
   );
 }
