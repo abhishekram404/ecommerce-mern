@@ -7,12 +7,11 @@ import clsx from "clsx";
 import { useDispatch } from "react-redux";
 import { useMutation } from "react-query";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { ERROR, SUCCESS } from "redux/constants";
-import LoginContext from "utils/LoginContext";
+import AppContext from "utils/AppContext";
 function Login() {
   const history = useHistory();
-  const { isUserLoggedIn } = useContext(LoginContext);
+  const { isUserLoggedIn } = useContext(AppContext);
   useEffect(() => {
     if (isUserLoggedIn) {
       history.push("/");

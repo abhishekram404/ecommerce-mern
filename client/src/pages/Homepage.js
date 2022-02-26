@@ -5,12 +5,12 @@ import React, { useContext, useEffect } from "react";
 import "styles/Homepage.scss";
 import categoryImage1 from "assets/gummy-coffee 1.svg";
 import RoleRestrict from "components/RoleRestrict";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getAllCategories } from "redux/actions/productActions";
 import { isEmptyArray } from "utils/helpers";
 import { useQuery } from "react-query";
 import axios from "axios";
-import LoginContext from "utils/LoginContext";
+import AppContext from "utils/AppContext";
 import { ERROR } from "redux/constants";
 export default function Homepage() {
   const dispatch = useDispatch();
@@ -18,7 +18,8 @@ export default function Homepage() {
     dispatch(getAllCategories());
   }, []);
 
-  const { isUserLoggedIn } = useContext(LoginContext);
+  const { isUserLoggedIn, categories } = useContext(AppContext);
+  console.log(categories);
   let {
     data: products,
     isLoading,
@@ -34,7 +35,6 @@ export default function Homepage() {
     products = products.data.details;
   }
 
-  const { categories } = useSelector((state) => state.product);
   return (
     <RoleRestrict onlyFor={["C"]}>
       <div className="homepage">

@@ -10,11 +10,11 @@ import Cookies from "js-cookie";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { ERROR, SUCCESS } from "redux/constants";
-import LoginContext from "utils/LoginContext";
+import AppContext from "utils/AppContext";
 export default function Navbar() {
   const dispatch = useDispatch();
 
-  const { isUserLoggedIn } = useContext(LoginContext);
+  const { isUserLoggedIn } = useContext(AppContext);
 
   const r = Cookies.get("r") || "C";
 

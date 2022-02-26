@@ -15,10 +15,11 @@ import Admin from "pages/Admin";
 import { useAlert } from "react-alert";
 import { useEffect } from "react";
 import { CLEAR } from "redux/constants";
-import { check_login } from "redux/actions/userActions";
 import ProtectedRoute from "components/ProtectedRoute";
-import LoginContext from "utils/LoginContext";
+import AppContext from "utils/AppContext";
 import Cookies from "js-cookie";
+import { useQuery } from "react-query";
+import axios from "axios";
 function App() {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -60,8 +61,17 @@ function App() {
     }
   }, [type, message]);
 
+  let { isSuccess: categoriesSuccess, data: categories } = useQuery(
+    "categories",
+    () => axios.get("/product/categories")
+  );
+
+  if (categoriesSuccess) {
+    categories = categories.data.details;
+  }
+
   return (
-    <LoginContext.Provider value={{ isUserLoggedIn }}>
+    <AppContext.Provider value={{ isUserLoggedIn, categories }}>
       <div className="App">
         <BrowserRouter>
           <Navbar />
@@ -87,7 +97,7 @@ function App() {
           <Footer />
         </BrowserRouter>
       </div>
-    </LoginContext.Provider>
+    </AppContext.Provider>
   );
 }
 

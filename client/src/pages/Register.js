@@ -8,9 +8,9 @@ import { useDispatch } from "react-redux";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { ERROR, SUCCESS } from "redux/constants";
-import LoginContext from "utils/LoginContext";
+import AppContext from "utils/AppContext";
 function Register() {
-  const { isUserLoggedIn } = useContext(LoginContext);
+  const { isUserLoggedIn } = useContext(AppContext);
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
