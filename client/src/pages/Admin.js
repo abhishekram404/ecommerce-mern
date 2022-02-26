@@ -16,6 +16,7 @@ export default function Admin() {
         <Sidebar />
         <div className="display-area card">
           <Switch>
+            <Route path={`${url}/`} exact component={Dashboard} />
             <Route path={`${url}/dashboard`} component={Dashboard} />
             <Route path={`${url}/products`} component={Products} />
             <Route path={`${url}/orders`} component={Orders} />

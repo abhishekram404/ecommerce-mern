@@ -1,29 +1,24 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import "styles/Products.scss";
 import ProductAdmin from "components/ProductAdmin";
 import { Route, Switch, useRouteMatch, Link } from "react-router-dom";
 import EditProduct from "./EditProduct";
 import { IoMdAdd } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "redux/actions/productActions";
 import { MdRefresh } from "react-icons/md";
 import { debounce } from "lodash";
 import { isEmptyArray } from "utils/helpers.js";
+import useFetchAllProducts from "utils/useFetchAllProducts";
 export default function Products() {
-  const dispatch = useDispatch();
   const { url } = useRouteMatch();
   const [filterResults, setFilterResults] = useState([]);
   const [resultMessage, setResultMessage] = useState({
     noOfResult: undefined,
     message: "",
   });
-  const { products } = useSelector((state) => state.product);
-  useEffect(() => {
-    dispatch(getAllProducts());
-  }, []);
+  let { data: products, isSuccess, isLoading, refetch } = useFetchAllProducts();
 
   const refreshFetchedProducts = () => {
-    dispatch(getAllProducts());
+    refetch();
   };
   const searchProduct = async (query) => {
     setResultMessage({
@@ -60,6 +55,12 @@ export default function Products() {
   };
   const debouncedSearch = useCallback(debounce(searchProduct, 500), [products]);
 
+  if (isSuccess) {
+    products = products.data.details;
+  }
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
   return (
     <Switch>
       <Route path={`${url}/`} exact>

@@ -5,27 +5,14 @@ import React, { useContext } from "react";
 import "styles/Homepage.scss";
 import categoryImage1 from "assets/gummy-coffee 1.svg";
 import RoleRestrict from "components/RoleRestrict";
-import { useDispatch } from "react-redux";
 import { isEmptyArray } from "utils/helpers";
-import { useQuery } from "react-query";
-import axios from "axios";
 import AppContext from "utils/AppContext";
-import { ERROR } from "redux/constants";
+import useFetchAllProducts from "utils/useFetchAllProducts";
 export default function Homepage() {
-  const dispatch = useDispatch();
+  const { categories } = useContext(AppContext);
 
-  const { isUserLoggedIn, categories } = useContext(AppContext);
-  let {
-    data: products,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useQuery("products", () => axios.get("/product"), {
-    enabled: !isUserLoggedIn,
-    onError: (error) => {
-      dispatch({ type: ERROR, payload: error?.response?.data?.message });
-    },
-  });
+  let { data: products, isLoading, isError, isSuccess } = useFetchAllProducts();
+
   if (isSuccess) {
     products = products.data.details;
   }
