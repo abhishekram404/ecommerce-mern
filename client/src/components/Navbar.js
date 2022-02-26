@@ -4,7 +4,7 @@ import "styles/Navbar.scss";
 import cartIcon from "assets/cart-logo-white.svg";
 import { CgMenuRightAlt } from "react-icons/cg";
 import clsx from "clsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggle_cart } from "redux/actions/commonActions";
 import Cookies from "js-cookie";
 import { useMutation } from "react-query";
@@ -16,7 +16,7 @@ export default function Navbar() {
 
   const { isUserLoggedIn } = useContext(LoginContext);
 
-  const r = useSelector((state) => state.user.r) || Cookies.get("r");
+  const r = Cookies.get("r") || "C";
 
   console.log(r);
 

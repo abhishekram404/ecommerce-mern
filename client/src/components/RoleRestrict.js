@@ -1,8 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 export default function RoleRestrict({ children, onlyFor, ...rest }) {
-  const r = useSelector((state) => state.user.r) || Cookies.get("r");
+  const r = Cookies.get("r") || "C";
+  console.log(r);
   return (
     <>
       {onlyFor.includes(r) ? (

@@ -29,7 +29,6 @@ function App() {
     sessionStorage.getItem("isUserLoggedIn") === "true" ||
     Cookies.get("isUserLoggedIn") === "true";
 
-  console.log(isUserLoggedIn);
   const isFirstRun = useRef(true);
   useEffect(() => {
     if (isFirstRun.current) {
