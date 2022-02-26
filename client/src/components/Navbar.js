@@ -6,18 +6,35 @@ import { CgMenuRightAlt } from "react-icons/cg";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle_cart } from "redux/actions/commonActions";
-import { logout_user } from "redux/actions/userActions";
 import Cookies from "js-cookie";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { ERROR, SUCCESS } from "redux/constants";
 export default function Navbar() {
   const dispatch = useDispatch();
 
   const isUserLoggedIn =
-    useSelector((state) => state.user.isUserLoggedIn) ||
-    Cookies.get("isUserLoggedIn");
+    sessionStorage.getItem("isUserLoggedIn") === "true" ||
+    Cookies.get("isUserLoggedIn") === "true";
+
+  console.log(isUserLoggedIn);
   const r = useSelector((state) => state.user.r) || Cookies.get("r");
 
   console.log(r);
 
+  const { mutate: logoutMutation } = useMutation(
+    () => axios.get("/user/logout"),
+    {
+      onSuccess: ({ data }) => {
+        sessionStorage.removeItem("isUserLoggedIn");
+        dispatch({ type: SUCCESS, payload: data.message });
+      },
+      onError: (error) => {
+        sessionStorage.removeItem("isUserLoggedIn");
+        dispatch({ type: ERROR, payload: error?.response?.data.message });
+      },
+    }
+  );
   return (
     <nav className={clsx("navbar   navbar-expand-lg px-4 py-3")} id="navbar">
       <h2 className="navbar-brand">
@@ -66,7 +83,7 @@ export default function Navbar() {
                 <div
                   role="button"
                   className="nav-link"
-                  onClick={() => dispatch(logout_user())}
+                  onClick={logoutMutation}
                 >
                   Logout
                 </div>
