@@ -12,7 +12,7 @@ export default function EditProduct(props) {
   const initialValues = {
     name: "",
     price: 0,
-    category: "uncategorized",
+    category: "Uncategorized",
     stock: 0,
     tags: "",
     description: "",

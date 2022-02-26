@@ -29,7 +29,9 @@ export default function ProductCustomer(props) {
           <div className="col-4 text-end text-success">Available</div>
         ) : (
           <div className="col-4 text-end text-danger">
-            Only {props.stock ?? "few"} left
+            {props.stock <= 0
+              ? "Out of stock"
+              : `Only ${props.stock ?? "few"} left`}
           </div>
         )}
       </div>
