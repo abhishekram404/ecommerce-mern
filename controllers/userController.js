@@ -209,9 +209,10 @@ exports.logout = async (req, res) => {
         sameSite: "None",
       }),
     });
-    res.status(200).send({
-      success: true,
-      data: null,
+    console.log(error.message);
+    res.status(500).send({
+      success: false,
+      data: error,
       message: "Logged out",
     });
   }
