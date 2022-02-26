@@ -4,7 +4,6 @@ import FormTemplate from "../components/FormTemplate";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { register_user } from "redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation } from "react-query";
 import axios from "axios";
