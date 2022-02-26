@@ -8,6 +8,7 @@ import { MdRefresh } from "react-icons/md";
 import { debounce } from "lodash";
 import { isEmptyArray } from "utils/helpers.js";
 import useFetchAllProducts from "utils/useFetchAllProducts";
+import EditProduct from "./EditProduct";
 export default function Products() {
   const { url } = useRouteMatch();
   const [filterResults, setFilterResults] = useState([]);
@@ -132,8 +133,8 @@ export default function Products() {
           </div>
         </div>
       </Route>
-      <Route path={`${url}/edit/:id`} component={AddProduct} />
-      <Route path={`${url}/add`} component={() => <AddProduct mode="add" />} />
+      <Route path={`${url}/edit/:id`} component={EditProduct} />
+      <Route path={`${url}/add`} component={() => <AddProduct />} />
     </Switch>
   );
 }

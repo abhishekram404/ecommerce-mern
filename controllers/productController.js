@@ -81,7 +81,15 @@ module.exports.getAllCategories = async (req, res) => {
 module.exports.getAProduct = async (req, res) => {
   try {
     const { id } = req.query;
-    const product = await Product.findById(id).select("-seller");
+    let product = await Product.findById(id).select("-seller").lean();
+
+    product = Object.assign({}, product, {
+      tags: product.tags.join(","),
+      category: product.category[0],
+      productImagesUploaded: product.productImages,
+      productImages: "",
+    });
+
     return res.status(200).send({
       success: true,
       message: "Product fetched successfully.",

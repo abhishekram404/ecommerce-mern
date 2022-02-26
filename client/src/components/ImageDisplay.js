@@ -6,8 +6,8 @@ import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-export default function ImageDisplay({ fileProp, upload }) {
-  const [images, setImages] = useState([]);
+export default function ImageDisplay({ fileProp, upload, productImages = [] }) {
+  const [images, setImages] = useState([...productImages]);
 
   const [activeImage, setActiveImage] = useState(() => images[0] ?? null);
   const [chosenImages, setChosenImages] = useState([]);

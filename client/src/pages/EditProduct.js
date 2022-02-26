@@ -1,24 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageDisplay from "components/ImageDisplay";
 import "styles/EditProduct.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { useMutation } from "react-query";
-import axios from "axios";
-import { ERROR, SUCCESS } from "redux/constants";
-export default function AddProduct(props) {
-  const dispatch = useDispatch();
+import { useParams } from "react-router-dom";
+import useFetchAProduct from "utils/useFetchAProduct";
+export default function EditProduct(props) {
   const [uploadImages, setUploadImages] = useState([]);
-  const initialValues = {
-    name: "",
-    price: "",
-    category: "Uncategorized",
-    stock: "",
-    tags: "",
-    description: "",
-    productImages: [],
-  };
+  const { id } = useParams();
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Product name is required."),
@@ -39,33 +28,29 @@ export default function AddProduct(props) {
       { productImages: uploadImages },
       { tags: tagsArray }
     );
-    addProductMutation(newObj);
   };
 
-  let { mutate: addProductMutation, isLoading } = useMutation(
-    (data) =>
-      axios.post("/product/create", data, {
-        withCredentials: true,
-      }),
-    {
-      onSuccess: ({ data }) => {
-        dispatch({ type: SUCCESS, payload: data.message });
-      },
-      onError: (error) => {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message });
-      },
-    }
-  );
+  let { data: productData, isSuccess, isLoading } = useFetchAProduct(id);
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (isSuccess) {
+    productData = productData.data.details;
+
+    console.log(productData);
+  }
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={productData}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
       {(formikProps) => (
         <div className="edit-product p-3">
-          <h2 className="page-title mb-0">Add product</h2>
+          <h2 className="page-title mb-0">Edit product</h2>
           <hr />
           <Form className="card p-4">
             <div className="row gx-4">
@@ -166,14 +151,14 @@ export default function AddProduct(props) {
                     type="button"
                     className="btn btn-light btn-lg delete-btn w-100 border mb-2 text-secondary"
                   >
-                    Cancel
+                    Delete this product
                   </button>
                   <button
                     type="submit"
                     className="btn btn-lg submit-btn w-100 border"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Adding product" : "Add product"}
+                    {isLoading ? "Updating product" : "Update product"}
                   </button>
                 </div>
               </div>
@@ -182,6 +167,7 @@ export default function AddProduct(props) {
                 <h3 className="page-title text-center">Product Images</h3>
                 <ImageDisplay
                   upload={true}
+                  productImages={productData.productImagesUploaded}
                   {...formikProps}
                   fileProp={(files) => {
                     setUploadImages(files);
