@@ -70,9 +70,27 @@ module.exports.getAllCategories = async (req, res) => {
       details: categoriesList,
     });
   } catch (error) {
-    await res.send({
+    await res.status(500).send({
       success: false,
       message: error.message,
+      details: error,
+    });
+  }
+};
+
+module.exports.getAProduct = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const product = await Product.findById(id).select("-seller");
+    return res.status(200).send({
+      success: true,
+      message: "Product fetched successfully.",
+      details: product,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: "Something went wrong while fetching the product.",
       details: error,
     });
   }
